@@ -1,4 +1,4 @@
-# DDB2 Virtual Schemas 1.0.0, released 2021-01-12
+# DB2 Virtual Schemas 1.0.0, released 2021-01-12
 
 Code name: Migration from the virtual-schemas repository
 

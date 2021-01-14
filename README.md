@@ -44,11 +44,11 @@ Find all the documentation in the [Virtual Schemas project][vs-doc].
 
 Running the Virtual Schema requires a Java Runtime version 11 or later.
 
-| Dependency                                                         | Purpose                                                | License                           |
-|--------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------|
-| [Exasol Virtual Schema JDBC][virtual-schema-common-jdbc]           | Common JDBC functions for Virtual Schemas adapters     | MIT License                       |
-| [DB2 JDBC Driver][db2-jdbc-driver]                                 | JDBC driver for DB2 database                           | Oracle Technology Network License |
-| [Exasol Error Reporting][exasol-error-reporting]                   | Creating unified error messages                        | MIT License                       |
+| Dependency                                                         | Purpose                                                | License                                 |
+|--------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------------|
+| [Exasol Virtual Schema JDBC][virtual-schema-common-jdbc]           | Common JDBC functions for Virtual Schemas adapters     | MIT License                             |
+| [DB2 JDBC Driver][db2-jdbc-driver]                                 | JDBC driver for DB2 database                           | Specified in the DB2 Dialect User Guide |
+| [Exasol Error Reporting][exasol-error-reporting]                   | Creating unified error messages                        | MIT License                             |
 
 ### Test Dependencies
 
