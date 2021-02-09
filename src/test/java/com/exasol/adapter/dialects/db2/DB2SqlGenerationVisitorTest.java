@@ -1,14 +1,13 @@
 package com.exasol.adapter.dialects.db2;
 
-import static com.exasol.adapter.dialects.VisitorAssertions.assertSqlNodeConvertedToAsterisk;
 import static com.exasol.adapter.dialects.VisitorAssertions.assertSqlNodeConvertedToOne;
 import static com.exasol.adapter.sql.AggregateFunction.AVG;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,10 @@ import com.exasol.adapter.AdapterException;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.adapternotes.ColumnAdapterNotes;
 import com.exasol.adapter.adapternotes.ColumnAdapterNotesJsonConverter;
-import com.exasol.adapter.dialects.*;
+import com.exasol.adapter.dialects.SqlDialect;
+import com.exasol.adapter.dialects.SqlDialectFactory;
+import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
+import com.exasol.adapter.dialects.rewriting.SqlGenerationVisitor;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 import com.exasol.adapter.metadata.*;
 import com.exasol.adapter.sql.*;
@@ -58,7 +60,7 @@ class DB2SqlGenerationVisitorTest {
     @ParameterizedTest
     void testVisitSqlColumnWithParent(final String typeName, final String expected) throws AdapterException {
         final SqlColumn column = getSqlColumn(typeName);
-        final SqlNode node = SqlSelectList.createSelectStarSelectList();
+        final SqlNode node = SqlSelectList.createAnyValueSelectList();
         column.setParent(node);
         assertThat(this.visitor.visit(column), equalTo(expected));
     }
@@ -72,7 +74,7 @@ class DB2SqlGenerationVisitorTest {
     @Test
     void testVisitSqlColumnWithParentTypeNameIsNotSupported() throws AdapterException {
         final SqlColumn column = getSqlColumn("BLOB");
-        final SqlNode node = SqlSelectList.createSelectStarSelectList();
+        final SqlNode node = SqlSelectList.createAnyValueSelectList();
         column.setParent(node);
         assertThat(this.visitor.visit(column), equalTo("'BLOB NOT SUPPORTED'"));
     }
@@ -93,44 +95,6 @@ class DB2SqlGenerationVisitorTest {
     void testVisitSqlSelectListAnyValue() throws AdapterException {
         final SqlSelectList sqlSelectList = SqlSelectList.createAnyValueSelectList();
         assertSqlNodeConvertedToOne(sqlSelectList, this.visitor);
-    }
-
-    @Test
-    void testVisitSqlSelectListSelectStar() throws AdapterException {
-        final SqlSelectList sqlSelectList = SqlSelectList.createSelectStarSelectList();
-        final TableMetadata tableMetadata = new TableMetadata("", "", Collections.emptyList(), "");
-        final SqlTable fromClause = new SqlTable("", tableMetadata);
-        final SqlNode sqlStatementSelect = SqlStatementSelect.builder().selectList(sqlSelectList).fromClause(fromClause)
-                .build();
-        sqlSelectList.setParent(sqlStatementSelect);
-        assertSqlNodeConvertedToAsterisk(sqlSelectList, this.visitor);
-    }
-
-    @Test
-    void testVisitSqlSelectListSelectStarRequiresCast() throws AdapterException {
-        final SqlSelectList sqlSelectList = createSqlSelectStarListWithOneColumn(
-                "{\"jdbcDataType\":2009, \"typeName\":\"XML\"}", DataType.createVarChar(10, DataType.ExaCharset.UTF8));
-        assertThat(this.visitor.visit(sqlSelectList),
-                equalTo("XMLSERIALIZE(\"test_column\" as VARCHAR(32000) INCLUDING XMLDECLARATION)"));
-    }
-
-    private SqlSelectList createSqlSelectStarListWithOneColumn(final String adapterNotes, final DataType dataType) {
-        final SqlSelectList selectList = SqlSelectList.createSelectStarSelectList();
-        final List<ColumnMetadata> columns = new ArrayList<>();
-        columns.add(ColumnMetadata.builder().name("test_column").adapterNotes(adapterNotes).type(dataType).build());
-        final TableMetadata tableMetadata = new TableMetadata("", "", columns, "");
-        final SqlTable fromClause = new SqlTable("", tableMetadata);
-        final SqlNode sqlStatementSelect = SqlStatementSelect.builder().selectList(selectList).fromClause(fromClause)
-                .build();
-        selectList.setParent(sqlStatementSelect);
-        return selectList;
-    }
-
-    @Test
-    void testVisitSqlSelectListSelectStarThrowsException() {
-        final SqlSelectList sqlSelectList = createSqlSelectStarListWithOneColumn("",
-                DataType.createVarChar(10, DataType.ExaCharset.UTF8));
-        assertThrows(SqlGenerationVisitorException.class, () -> this.visitor.visit(sqlSelectList));
     }
 
     @Test
