@@ -1,4 +1,4 @@
-# DB2 Virtual Schemas 1.0.1, released 2021-??-??
+# DB2 Virtual Schemas 2.0.0, released 2021-??-??
 
 Code name:
 
