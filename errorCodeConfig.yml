@@ -1,0 +1,5 @@
+error-tags:
+  VS-DB2:
+    packages:
+      - com.exasol.adapter.dialects.db2
+    highest-index: 1

@@ -13,8 +13,10 @@ import java.util.Set;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
 import com.exasol.adapter.dialects.*;
+import com.exasol.adapter.dialects.rewriting.ImportIntoTemporaryTableQueryRewriter;
+import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.jdbc.*;
-import com.exasol.adapter.sql.SqlNodeVisitor;
+import com.exasol.errorreporting.ExaError;
 
 /**
  * Dialect for DB2 using the DB2 Connector JDBC driver.
@@ -38,14 +40,15 @@ public class DB2SqlDialect extends AbstractSqlDialect {
         try {
             return new DB2MetadataReader(this.connectionFactory.getConnection(), this.properties);
         } catch (final SQLException exception) {
-            throw new RemoteMetadataReaderException(
-                    "Unable to create DB2 remote metadata reader. Caused by: " + exception.getMessage(), exception);
+            throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VS-DB2-1")
+                    .message("Unable to create DB2 remote metadata reader. Caused by: {{cause}}")
+                    .unquotedParameter("cause", exception.getMessage()).toString(), exception);
         }
     }
 
     @Override
     protected QueryRewriter createQueryRewriter() {
-        return new ImportIntoQueryRewriter(this, createRemoteMetadataReader(), this.connectionFactory);
+        return new ImportIntoTemporaryTableQueryRewriter(this, createRemoteMetadataReader(), this.connectionFactory);
     }
 
     @Override
@@ -115,7 +118,7 @@ public class DB2SqlDialect extends AbstractSqlDialect {
     }
 
     @Override
-    public SqlNodeVisitor<String> getSqlGenerationVisitor(final SqlGenerationContext context) {
+    public SqlGenerator getSqlGenerator(final SqlGenerationContext context) {
         return new DB2SqlGenerationVisitor(this, context);
     }
 

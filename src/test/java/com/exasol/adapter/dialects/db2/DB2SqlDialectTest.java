@@ -14,7 +14,9 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,16 +36,19 @@ import com.exasol.adapter.capabilities.Capabilities;
 import com.exasol.adapter.dialects.PropertyValidationException;
 import com.exasol.adapter.dialects.SqlDialect;
 import com.exasol.adapter.jdbc.ConnectionFactory;
+import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
 
 @ExtendWith(MockitoExtension.class)
 class DB2SqlDialectTest {
     private DB2SqlDialect dialect;
     private Map<String, String> rawProperties;
+    @Mock
+    private ConnectionFactory connectionFactoryMock;
 
     @BeforeEach
-    void beforeEach(@Mock final ConnectionFactory connectionFactoryMock) {
+    void beforeEach() {
         this.rawProperties = new HashMap<>();
-        this.dialect = new DB2SqlDialect(connectionFactoryMock, AdapterProperties.emptyProperties());
+        this.dialect = new DB2SqlDialect(this.connectionFactoryMock, AdapterProperties.emptyProperties());
     }
 
     @Test
@@ -81,19 +86,25 @@ class DB2SqlDialectTest {
     }
 
     @Test
-    void testValidateCatalogProperty() {
+    void testCreateRemoteMetadataReaderConnectionFails() throws SQLException {
+        when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException());
+        final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
+                this.dialect::createRemoteMetadataReader);
+        assertThat(exception.getMessage(), containsString("E-VS-DB2-1"));
+    }
+
+    @Test
+    void testValidateCatalogProperty() throws PropertyValidationException {
         setMandatoryProperties();
         this.rawProperties.put(CATALOG_NAME_PROPERTY, "MY_CATALOG");
         final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
         final SqlDialect sqlDialect = new DB2SqlDialect(null, adapterProperties);
         final PropertyValidationException exception = assertThrows(PropertyValidationException.class,
                 sqlDialect::validateProperties);
-        MatcherAssert.assertThat(exception.getMessage(), containsString(
-                "The dialect DB2 does not support CATALOG_NAME property. Please, do not set the \"CATALOG_NAME\" property."));
+        MatcherAssert.assertThat(exception.getMessage(), containsString("E-VS-COM-JDBC-13"));
     }
 
     private void setMandatoryProperties() {
-        this.rawProperties.put(AdapterProperties.SQL_DIALECT_PROPERTY, "DB2");
         this.rawProperties.put(AdapterProperties.CONNECTION_NAME_PROPERTY, "MY_CONN");
     }
 
@@ -147,8 +158,8 @@ class DB2SqlDialectTest {
     }
 
     @Test
-    void testGetSqlGenerationVisitor() {
-        assertThat(this.dialect.getSqlGenerationVisitor(null), CoreMatchers.instanceOf(DB2SqlGenerationVisitor.class));
+    void testGetSqlGenerator() {
+        assertThat(this.dialect.getSqlGenerator(null), CoreMatchers.instanceOf(DB2SqlGenerationVisitor.class));
     }
 
     @Test
