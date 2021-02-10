@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.exasol</groupId>
   <artifactId>db2-virtual-schema</artifactId>
-  <version>1.0.1</version>
+  <version>2.0.0</version>
   <name>Virtual Schema for DB2</name>
   <distributionManagement>
 		<repository>
