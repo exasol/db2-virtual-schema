@@ -32,7 +32,7 @@ Additionally there are 2 files for the DB2 Driver.
 
 Make sure that you upload the necessary license file for the target platform you want to connect to. 
 
-## Uploading the JDBC Driver to EXAOperation
+## Uploading the JDBC Driver to BucketFS
 
 1. [Create a bucket in BucketFS](https://docs.exasol.com/administration/on-premise/bucketfs/create_new_bucket_in_bucketfs_service.htm)
 1. Upload the driver and the license to BucketFS
