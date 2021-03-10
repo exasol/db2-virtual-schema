@@ -4,7 +4,6 @@ import static com.exasol.adapter.dialects.db2.IntegrationTestConfiguration.*;
 import static com.exasol.dbbuilder.dialects.exasol.AdapterScript.Language.JAVA;
 import static com.exasol.matcher.ResultSetStructureMatcher.table;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
 import java.sql.*;
@@ -72,8 +71,8 @@ class DB2SqlDialectIT {
     private static void uploadDriverToBucket() throws InterruptedException, BucketAccessException, TimeoutException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         final Path pathToSettingsFile = Path.of("src", "test", "resources", JDBC_DRIVER_CONFIGURATION_FILE_NAME);
-        bucket.uploadFile(pathToSettingsFile, "drivers/jdbc/" + JDBC_DRIVER_CONFIGURATION_FILE_NAME);
         bucket.uploadFile(JDBC_DRIVER_PATH, "drivers/jdbc/" + JDBC_DRIVER_NAME);
+        bucket.uploadFile(pathToSettingsFile, "drivers/jdbc/" + JDBC_DRIVER_CONFIGURATION_FILE_NAME);
     }
 
 //    @BeforeEach
@@ -149,5 +148,4 @@ class DB2SqlDialectIT {
     private ResultSet query(final String sql) throws SQLException {
         return exasolConnection.createStatement().executeQuery(sql);
     }
-
 }
