@@ -117,6 +117,7 @@
             <groupId>com.ibm.db2</groupId>
             <artifactId>jcc</artifactId>
             <version>11.5.5.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -306,6 +307,25 @@
                             <outputDirectory>${project.build.directory}/db2-driver</outputDirectory>
                             <stripVersion>true</stripVersion>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${surefire.and.failsafe.plugin.version}</version>
+                <configuration>
+                    <!-- Set the highest log level for coverage testing, so that we have
+                        a chance to reach branches <property> in the logging lambdas too. -->
+                    <argLine>-Djava.util.logging.config.file=src/test/resources/logging.properties ${argLine}</argLine>
+                    <forkCount>0</forkCount>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
