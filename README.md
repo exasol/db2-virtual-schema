@@ -82,7 +82,7 @@ Running the Virtual Schema requires a Java Runtime version 11 or later.
 [exasol-error-reporting]: https://github.com/exasol/error-reporting-java/
 
 [exasol-hamcrest]: https://github.com/exasol/hamcrest-resultset-matcher
-[test-db-builder]: https://github.com/exasol/test-db-builder/
+[test-db-builder]: https://github.com/exasol/test-db-builder-java
 
 [maven-jacoco-plugin]: https://www.eclemma.org/jacoco/trunk/doc/maven.html
 [maven-surefire-plugin]: https://maven.apache.org/surefire/maven-surefire-plugin/
