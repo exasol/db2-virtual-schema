@@ -60,10 +60,12 @@ class DB2SqlDialectIT {
             throws InterruptedException, BucketAccessException, TimeoutException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         bucket.uploadFile(PATH_TO_VIRTUAL_SCHEMAS_JAR, VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION);
-        final String content = "%scriptclass com.exasol.adapter.RequestDispatcher;\n" //
-                + "%jar /buckets/bfsdefault/default/" + VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION + ";\n" //
-                + "%jar /buckets/bfsdefault/default/drivers/jdbc/" + JDBC_DRIVER_NAME + ";\n";
-        return adapterSchema.createAdapterScript("EXASOL_ADAPTER", JAVA, content);
+        return adapterSchema.createAdapterScriptBuilder("EXASOL_ADAPTER").language(JAVA)
+                .bucketFsContent("com.exasol.adapter.RequestDispatcher", //
+                        "/buckets/bfsdefault/default/" + VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION, //
+                        "/buckets/bfsdefault/default/drivers/jdbc/" + JDBC_DRIVER_NAME)
+                .build();
+
     }
 
     private static ConnectionDefinition createAdapterConnectionDefinition() {
