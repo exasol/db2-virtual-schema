@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
+import com.exasol.udfdebugging.UdfTestSetup;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.Db2Container;
@@ -44,9 +45,11 @@ class DB2SqlDialectIT {
     @BeforeAll
     static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
             JdbcDatabaseContainer.NoDriverFoundException, SQLException {
+        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket());
         exasolConnection = EXASOL.createConnection("");
         db2Connection = DB2.createConnection("");
-        objectFactory = new ExasolObjectFactory(exasolConnection);
+        objectFactory = new ExasolObjectFactory(exasolConnection,
+                ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
         adapterSchema = objectFactory.createSchema("ADAPTER_SCHEMA");
         uploadDriverToBucket();
         adapterScript = installVirtualSchemaAdapter(adapterSchema);
