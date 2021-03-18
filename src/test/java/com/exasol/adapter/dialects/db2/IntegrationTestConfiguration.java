@@ -7,7 +7,6 @@ public class IntegrationTestConfiguration {
     public static final String EDB2_DOCKER_REFERENCE = "ibmcom/db2:11.5.5.0";
     public static final String VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION = "virtual-schema-dist-9.0.1-db2-2.0.0.jar";
     public static final Path PATH_TO_VIRTUAL_SCHEMAS_JAR = Path.of("target", VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION);
-    public static final String DOCKER_IP_ADDRESS = "172.17.0.1";
     public static final int DB2_PORT = 50000;
     public static final String JDBC_DRIVER_CONFIGURATION_FILE_NAME = "settings.cfg";
     public static final String JDBC_DRIVER_NAME = "jcc.jar";

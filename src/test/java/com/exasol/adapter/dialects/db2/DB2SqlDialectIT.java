@@ -69,7 +69,7 @@ class DB2SqlDialectIT {
     }
 
     private static ConnectionDefinition createAdapterConnectionDefinition() {
-        final String jdbcUrl = "jdbc:db2://" + DOCKER_IP_ADDRESS + ":" + DB2.getMappedPort(DB2_PORT) + "/test";
+        final String jdbcUrl = "jdbc:db2://" + EXASOL.getHostIp() + ":" + DB2.getMappedPort(DB2_PORT) + "/test";
         return objectFactory.createConnectionDefinition("JDBC_CONNECTION", jdbcUrl, DB2.getUsername(),
                 DB2.getPassword());
     }
