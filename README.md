@@ -58,6 +58,8 @@ Running the Virtual Schema requires a Java Runtime version 11 or later.
 | [JUnit](https://junit.org/junit5)                                  | Unit testing framework                                 | Eclipse Public License 1.0    |
 | [Mockito](http://site.mockito.org/)                                | Mocking framework                                      | MIT License                   |
 | [Exasol Hamcrest Result Set Matcher][exasol-hamcrest]              | Hamcrest result set matcher for testing                | MIT License                   |
+| [Testcontainers](https://www.testcontainers.org/)                  | Container-based integration tests                      | MIT License                   |
+| [Test Database Builder][test-db-builder]                           | Fluent database interfaces for testing                 | MIT License                   |
 
 ### Maven Plug-ins
 
@@ -80,6 +82,7 @@ Running the Virtual Schema requires a Java Runtime version 11 or later.
 [exasol-error-reporting]: https://github.com/exasol/error-reporting-java/
 
 [exasol-hamcrest]: https://github.com/exasol/hamcrest-resultset-matcher
+[test-db-builder]: https://github.com/exasol/test-db-builder-java
 
 [maven-jacoco-plugin]: https://www.eclemma.org/jacoco/trunk/doc/maven.html
 [maven-surefire-plugin]: https://maven.apache.org/surefire/maven-surefire-plugin/

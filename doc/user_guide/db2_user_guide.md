@@ -18,21 +18,21 @@ Now register the driver in EXAOperation:
 
 You need to specify the following settings when adding the JDBC driver via EXAOperation.
 
-| Parameter | Value                                               |
-|-----------|-----------------------------------------------------|
-| Name      | `DB2`                                               |
-| Main      | `com.ibm.db2.jcc.DB2Driver`                      |
-| Prefix    | `jdbc:db2:`                                        |
-| Files     | `db2jcc4.jar`, `db2jcc_license_cu.jar`          |
+| Parameter | Value                         |
+|-----------|-------------------------------|
+| Name      | `DB2`                         |
+| Main      | `com.ibm.db2.jcc.DB2Driver`   |
+| Prefix    | `jdbc:db2:`                   |
+| Files     | `db2jcc4.jar` + license files |
 
-Additionally there are 2 files for the DB2 Driver.
+Additionally there are 2 files for the DB2 Driver:
 
 * `db2jcc_license_cu.jar` - License File for DB2 on Linux Unix and Windows
 * `db2jcc_license_cisuz.jar` - License File for DB2 on zOS (Mainframe)
 
 Make sure that you upload the necessary license file for the target platform you want to connect to. 
 
-## Uploading the JDBC Driver to EXAOperation
+## Uploading the JDBC Driver to BucketFS
 
 1. [Create a bucket in BucketFS](https://docs.exasol.com/administration/on-premise/bucketfs/create_new_bucket_in_bucketfs_service.htm)
 1. Upload the driver and the license to BucketFS
@@ -98,24 +98,42 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 ;
 ```
 
-## Testing information
+## Data Types Conversion
 
-DB2 was tested with the IBM DB2 JCC Drivers that come with DB2 LUW V10.1 and V11. As these drivers didn't have any major changes in the past years any DB2 driver should work (back to V9.1). The driver comes with 2 different implementations `db2jcc.jar` and `db2jcc4.jar`. All tests were made with the `db2jcc4.jar`.
-
-## Supported Capabilities
-
-The DB2 dialect handles implements specific casts for time data types and functions.
-
-## Casting of Data Types
-
-* `TIMESTAMP` and `TIMESTAMP(x)` is cast to `VARCHAR` to not lose precision.
-* `VARCHAR` and `CHAR` for bit data will be cast to a hex string with double the original size
-* `TIME` will be cast to `VARCHAR(8)`
-* `XML` will be cast to `VARCHAR(DB2_MAX_LENGTH)`
-* `BLOB` is not supported
+| DB2 Data Type | Supported | Converted Exasol Data Type | Known limitations
+|-------------- |-----------|----------------------------|-------------------
+| BIGINT        | ✓         | DECIMAL(19,0)              |
+| BINARY        | ×         |                            |
+| BLOB          | ×         |                            |
+| BOOLEAN       | ✓         | BOOLEAN                    |
+| CHARACTER     | ✓         | CHAR                       |
+| CLOB          | ×         |                            |
+| DATE          | ✓         | DATE                       |
+| DBCLOB        | ×         |                            |
+| DECIMAL       | ✓         | DECIMAL                    |
+| DECFLOAT      | ×         |                            |
+| DOUBLE        | ✓         | DOUBLE PRECISION           |
+| GRAPHIC       | ×         |                            |
+| INTEGER       | ✓         | DECIMAL(10,0)              |
+| SMALLINT      | ✓         | DECIMAL(5,0)               |
+| TIME          | ✓         | VARCHAR(100)               |
+| TIMESTAMP     | ✓         | VARCHAR(32)                |
+| REAL          | ✓         | DOUBLE PRECISION           |
+| VARCHAR       | ✓         | VARCHAR                    |
+| VARBINARY     | ×         |                            |
+| VARGRAPHIC    | ×         |                            |
+| XML           | ✓         | VARCHAR(2000000)           |
 
 ## Casting of Functions
 
 * `LIMIT` will replaced by `FETCH FIRST x ROWS ONLY`
 * `OFFSET` is currently not supported as only DB2 V11 support this natively
 * `ADD_DAYS`, `ADD_WEEKS` ... will be replaced by `COLUMN + DAYS`, `COLUMN + ....`
+
+## Testing information
+
+In the following matrix you find combinations of JDBC driver and dialect version that we tested.
+
+| Virtual Schema Version | DB2 Version         | Driver Name | Driver Version |
+|------------------------|---------------------|-------------|----------------|
+| 2.0.0                  | ibmcom/db2:11.5.5.0 | db2jcc     | See pom.xml    |

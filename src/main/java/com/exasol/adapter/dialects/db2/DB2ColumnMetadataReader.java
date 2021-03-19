@@ -29,7 +29,6 @@ public class DB2ColumnMetadataReader extends BaseColumnMetadataReader {
     public DataType mapJdbcType(final JDBCTypeDescription jdbcTypeDescription) {
         final int size = jdbcTypeDescription.getPrecisionOrSize();
         switch (jdbcTypeDescription.getJdbcType()) {
-        case Types.CLOB:
         case Types.OTHER:
             return DataType.createVarChar(DataType.MAX_EXASOL_VARCHAR_SIZE, DataType.ExaCharset.UTF8);
         case Types.TIMESTAMP:
@@ -41,10 +40,6 @@ public class DB2ColumnMetadataReader extends BaseColumnMetadataReader {
         case Types.NCHAR:
         case Types.LONGNVARCHAR:
             return getLiteralDataType(size);
-        case Types.BINARY:
-            return DataType.createChar(size * 2, DataType.ExaCharset.ASCII);
-        case Types.VARBINARY:
-            return DataType.createVarChar(size * 2, DataType.ExaCharset.ASCII);
         default:
             return super.mapJdbcType(jdbcTypeDescription);
         }

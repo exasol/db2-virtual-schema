@@ -26,13 +26,6 @@ class DB2ColumnMetadataReaderTest {
     }
 
     @Test
-    void testMapJdbcTypeClob() {
-        final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.CLOB, 0, 0, 0, "");
-        assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription),
-                equalTo(DataType.createVarChar(DataType.MAX_EXASOL_VARCHAR_SIZE, DataType.ExaCharset.UTF8)));
-    }
-
-    @Test
     void testMapJdbcTypeOther() {
         final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.OTHER, 0, 0, 0, "");
         assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription),
@@ -65,22 +58,16 @@ class DB2ColumnMetadataReaderTest {
                 equalTo(DataType.createVarChar(DataType.MAX_EXASOL_VARCHAR_SIZE, DataType.ExaCharset.UTF8)));
     }
 
-    @Test
-    void testMapJdbcTypeBinary() {
+    @ValueSource(ints = { Types.BINARY, Types.VARBINARY, Types.CLOB })
+    @ParameterizedTest
+    void testUnsupportedTypes() {
         final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.BINARY, 0, 0, 0, "");
         assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription),
-                equalTo(DataType.createChar(jdbcTypeDescription.getPrecisionOrSize() * 2, DataType.ExaCharset.ASCII)));
+                equalTo(DataType.createUnsupported()));
     }
 
     @Test
-    void testMapJdbcTypeVarbinary() {
-        final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.VARBINARY, 0, 0, 0, "");
-        assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription), equalTo(
-                DataType.createVarChar(jdbcTypeDescription.getPrecisionOrSize() * 2, DataType.ExaCharset.ASCII)));
-    }
-
-    @Test
-    void testMapJdbcTypeDefault() {
+    void testMapJdbcTypeBoolean() {
         final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.BOOLEAN, 0, 0, 0, "BOOLEAN");
         assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription),
                 CoreMatchers.equalTo(DataType.createBool()));
