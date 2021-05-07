@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-import com.exasol.udfdebugging.UdfTestSetup;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.Db2Container;
@@ -25,6 +24,7 @@ import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.DatabaseObject;
 import com.exasol.dbbuilder.dialects.exasol.*;
+import com.exasol.udfdebugging.UdfTestSetup;
 
 @Tag("integration")
 @Testcontainers
@@ -184,6 +184,59 @@ class DB2SqlDialectIT {
         assertVirtualTableContents(table, table().row(true).row(false).matches());
     }
 
+    @Test
+    void testLeftJoin() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL LEFT JOIN TR ON TL.C1 = TR.C1 ORDER BY TL.C1", //
+                table() //
+                        .row("K1", "L1", "K1", "R1") //
+                        .row("K3", "L3", null, null) //
+                        .row(null, "L2", null, null) //
+                        .matches());
+    }
+
+    @Test
+    void testLeftJoinWithProjection() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT TL.C1, TL.C2, TR.C2 FROM TL LEFT JOIN TR ON TL.C1 = TR.C1 ORDER BY TL.C1", //
+                table() //
+                        .row("K1", "L1", "R1") //
+                        .row("K3", "L3", null) //
+                        .row(null, "L2", null) //
+                        .matches());
+    }
+
+    @Test
+    void testRightJoin() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL RIGHT JOIN TR ON TL.C1 = TR.C1 ORDER BY TL.C1, TR.C1", //
+                table() //
+                        .row("K1", "L1", "K1", "R1") //
+                        .row(null, null, "K2", "R2") //
+                        .row(null, null, null, "R3") //
+                        .matches());
+    }
+
+    @Test
+    void testInnerJoin() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL INNER JOIN TR ON TL.C1 = TR.C1 ORDER BY TL.C1", //
+                table().row("K1", "L1", "K1", "R1").matches());
+    }
+
+    @Test
+    void testFullOuterJoin() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL FULL OUTER JOIN TR ON TL.C1 = TR.C1 ORDER BY TL.C1, TL.C2, TR.C1, TR.C2", //
+                table() //
+                        .row("K1", "L1", "K1", "R1") //
+                        .row("K3", "L3", null, null) //
+                        .row(null, "L2", null, null) //
+                        .row(null, null, "K2", "R2") //
+                        .row(null, null, null, "R3") //
+                        .matches());
+    }
+
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);
     }
@@ -234,5 +287,31 @@ class DB2SqlDialectIT {
 
     private ResultSet query(final String sql) throws SQLException {
         return exasolConnection.createStatement().executeQuery(sql);
+    }
+
+    private void createTablesForJoinTest() throws SQLException {
+        try (final Statement statement = db2Connection.createStatement()) {
+            statement.execute("DROP TABLE TL IF EXISTS");
+            statement.execute("CREATE TABLE TL (C1 VARCHAR(2), C2 VARCHAR(2))");
+            statement.execute("INSERT INTO TL VALUES ('K1', 'L1')");
+            statement.execute("INSERT INTO TL VALUES (null, 'L2')");
+            statement.execute("INSERT INTO TL VALUES ('K3', 'L3')");
+            statement.execute("DROP TABLE TR IF EXISTS");
+            statement.execute("CREATE TABLE TR (C1 VARCHAR(2), C2 VARCHAR(2))");
+            statement.execute("INSERT INTO TR VALUES ('K1', 'R1')");
+            statement.execute("INSERT INTO TR VALUES ('K2', 'R2')");
+            statement.execute("INSERT INTO TR VALUES (null, 'R3')");
+        }
+    }
+
+    private void assertVsQuery(final String sql, final Matcher<ResultSet> matcher) {
+        final VirtualSchema virtualSchema = createVirtualSchema();
+        try {
+            assertThat(query(sql), matcher);
+        } catch (final SQLException exception) {
+            Assertions.fail("Unable to execute assertion query. Caused by: " + exception.getMessage());
+        } finally {
+            virtualSchema.drop();
+        }
     }
 }

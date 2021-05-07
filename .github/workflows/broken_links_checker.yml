@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: lychee Link Checker
-        id: lychee
+        id: lc
         uses: lycheeverse/lychee-action@v1.0.6
       - name: Fail if there were link errors
-        run: exit ${{ steps.lychee.outputs.exit_code }}
+        run: exit ${{ steps.lc.outputs.exit_code }}

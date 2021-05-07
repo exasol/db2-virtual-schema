@@ -25,12 +25,12 @@ You need to specify the following settings when adding the JDBC driver via EXAOp
 | Prefix    | `jdbc:db2:`                   |
 | Files     | `db2jcc4.jar` + license files |
 
-Additionally there are 2 files for the DB2 Driver:
+Additionally, there are 2 files for the DB2 Driver:
 
 * `db2jcc_license_cu.jar` - License File for DB2 on Linux Unix and Windows
 * `db2jcc_license_cisuz.jar` - License File for DB2 on zOS (Mainframe)
 
-Make sure that you upload the necessary license file for the target platform you want to connect to. 
+Make sure that you upload the necessary license file for the target platform you want to connect to.
 
 ## Uploading the JDBC Driver to BucketFS
 
@@ -56,7 +56,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.1-db2-2.0.0.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.2-db2-2.0.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
 /
@@ -68,12 +68,13 @@ CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.1-db2-2.0.0.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.2-db2-2.0.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cisuz.jar;
 /
 ```
+
 ## Defining a Named Connection
 
 Define the connection to DB2 as shown below.
@@ -87,7 +88,7 @@ IDENTIFIED BY '<password>';
 
 ## Creating a Virtual Schema
 
-Below you see how a DB2 Virtual Schema is created. 
+Below you see how a DB2 Virtual Schema is created.
 
 ```sql
 CREATE VIRTUAL SCHEMA <virtual schema name>
