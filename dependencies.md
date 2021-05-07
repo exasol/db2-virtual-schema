@@ -62,6 +62,7 @@
 [1]: https://opensource.org/licenses/MIT
 [12]: https://github.com/mockito/mockito
 [51]: https://maven.apache.org/surefire/maven-failsafe-plugin/
+[22]: https://github.com/exasol/test-db-builder-java
 [37]: http://www.mojohaus.org/versions-maven-plugin/
 [9]: http://opensource.org/licenses/BSD-3-Clause
 [31]: https://maven.apache.org/plugins/maven-compiler-plugin/
@@ -77,7 +78,6 @@
 [53]: http://zlika.github.io/reproducible-build-maven-plugin
 [63]: https://maven.apache.org/plugins/maven-site-plugin/
 [30]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[6]: https://github.com/exasol/udf-debugging-javat
 [35]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [13]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [11]: https://www.eclipse.org/legal/epl-v20.html
@@ -86,10 +86,10 @@
 [47]: https://sonatype.github.io/ossindex-maven/maven-plugin/
 [16]: https://testcontainers.org
 [24]: http://www-03.ibm.com/software/sla/sladb.nsf/lilookup/179A6D1769B0A44D8525862400329FB8?OpenDocument
+[6]: https://github.com/exasol/udf-debugging-java
 [8]: http://hamcrest.org/JavaHamcrest/
 [61]: http://maven.apache.org/plugins/maven-deploy-plugin/
 [39]: https://github.com/exasol/artifact-reference-checker-maven-plugin
 [43]: https://github.com/exasol/error-code-crawler-maven-plugin
-[22]: https://github.com/exasol/test-db-builder
 [45]: https://maven.apache.org/plugins/maven-jar-plugin/
 [33]: https://maven.apache.org/plugins/maven-assembly-plugin/
