@@ -1,14 +1,16 @@
-# DB2 Virtual Schemas 2.0.0, released 2021-??-??
+# DB2 Virtual Schemas 2.0.0, released 2021-05-??
 
-Code name:
+Code name: Removed `SQL_DIALECT` property, JOIN pushdown
 
 ## Summary
 
-The `SQL_DIALECT` property used when executing a `CREATE VIRTUAL SCHEMA` from the Exasol database is obsolete from this version. Please, do not provide this property anymore.
+In this release we have enabled JOIN for the pushdown. It means the JOIN queries with a lot of data should work much faster from now on.
+Also, the `SQL_DIALECT` property used when executing a `CREATE VIRTUAL SCHEMA` from the Exasol database is obsolete from this version. Please, do not provide this property anymore.
 
-## Features / Enhancements
+## Features
 
-* 3: Unified error messages with `error-reporting-java` 
+* #3: Unified error messages with `error-reporting-java`. 
+* #10: Enabled JOIN capabilities for the pushdown.
 
 ## Dependency Updates
 
