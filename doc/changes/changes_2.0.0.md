@@ -4,7 +4,7 @@ Code name: Removed `SQL_DIALECT` property, JOIN pushdown
 
 ## Summary
 
-In this release we have enabled JOIN for the pushdown. It means the JOIN queries with a lot of data should work much faster from now on.
+In this release we have enabled pushdown for the JOIN. It means the JOIN queries with a lot of data should work much faster from now on.
 Also, the `SQL_DIALECT` property used when executing a `CREATE VIRTUAL SCHEMA` from the Exasol database is obsolete from this version. Please, do not provide this property anymore.
 
 ## Features
