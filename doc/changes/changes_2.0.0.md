@@ -11,7 +11,7 @@ Also, the `SQL_DIALECT` property used when executing a `CREATE VIRTUAL SCHEMA` f
 
 * #3: Unified error messages with `error-reporting-java`. 
 * #10: Enabled JOIN capabilities for the pushdown.
-* #6: Added additional capabilities for scalar function: FROM_POSIX_TIME, HOUR, INITCAP.
+* #6: Added additional capabilities for scalar function: HOUR, INITCAP.
 
 ## Dependency Updates
 

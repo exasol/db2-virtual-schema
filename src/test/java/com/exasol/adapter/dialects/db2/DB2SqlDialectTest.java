@@ -80,7 +80,7 @@ class DB2SqlDialectTest {
                                 ADD_DAYS, ADD_HOURS, ADD_MINUTES, ADD_MONTHS, ADD_SECONDS, ADD_WEEKS, ADD_YEARS,
                                 CURRENT_DATE, CURRENT_TIMESTAMP, LOCALTIMESTAMP, SYSDATE, SYSTIMESTAMP, CAST, TO_CHAR,
                                 TO_DATE, TO_NUMBER, TO_TIMESTAMP, CASE, CURRENT_SCHEMA, CURRENT_USER, NULLIFZERO,
-                                ZEROIFNULL, FROM_POSIX_TIME, HOUR, INITCAP)));
+                                ZEROIFNULL, HOUR, INITCAP)));
     }
 
     @Test

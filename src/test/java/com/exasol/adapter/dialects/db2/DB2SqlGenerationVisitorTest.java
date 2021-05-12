@@ -203,14 +203,6 @@ class DB2SqlGenerationVisitorTest {
                 equalTo("LISTAGG('test', '''') WITHIN GROUP(ORDER BY \"\"\"test_column\" DESC, \"test_column2\"\"\")"));
     }
 
-    @Test
-    void testGetFromPosixTime() throws AdapterException {
-        final List<SqlNode> arguments = List.of(new SqlLiteralExactnumeric(BigDecimal.ONE));
-        final SqlFunctionScalar sqlFunctionScalar = new SqlFunctionScalar(ScalarFunction.FROM_POSIX_TIME, arguments);
-        assertThat(this.visitor.visit(sqlFunctionScalar),
-                equalTo("ADD_SECONDS('1970-01-01 00:00:00', 1)"));
-    }
-
     private static SqlNode getTestSqlNode() {
         return new DialectTestData().getTestSqlNode();
     }

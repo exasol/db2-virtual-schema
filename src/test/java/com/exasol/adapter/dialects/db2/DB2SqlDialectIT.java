@@ -238,15 +238,6 @@ class DB2SqlDialectIT {
     }
 
     @Test
-    void testScalarFunctionFromPosixTime() throws SQLException {
-        final String table = createSingleColumnTable("INT", List.of("1"), "FROM_POSIX_TIME");
-        assertVsQuery("SELECT FROM_POSIX_TIME(C1) FROM " + table, //
-                table() //
-                        .row(Timestamp.valueOf("1970-01-01 00:00:01.0")) //
-                        .matches());
-    }
-
-    @Test
     void testScalarFunctionHour() throws SQLException {
         final String table = createSingleColumnTable("TIMESTAMP", List.of("'9999-12-31 23.59.59'"), "HOUR");
         assertVsQuery("SELECT HOUR(C1) FROM " + table, //

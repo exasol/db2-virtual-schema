@@ -145,16 +145,9 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
             return getNullZero(function, "IFNULL(");
         case DIV:
             return getDiv(function);
-        case FROM_POSIX_TIME:
-            return getFromPosixTime(function);
         default:
             return super.visit(function);
         }
-    }
-
-    private String getFromPosixTime(final SqlFunctionScalar function) throws AdapterException {
-        final String argument = function.getArguments().get(0).accept(this);
-        return "ADD_SECONDS('1970-01-01 00:00:00', " + argument + ")";
     }
 
     private String getDiv(final SqlFunctionScalar function) throws AdapterException {
