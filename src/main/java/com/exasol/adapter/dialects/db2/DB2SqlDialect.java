@@ -78,17 +78,8 @@ public class DB2SqlDialect extends AbstractSqlDialect {
                         RTRIM, SOUNDEX, SUBSTR, TRANSLATE, TRIM, UPPER, ADD_DAYS, ADD_HOURS, ADD_MINUTES, ADD_MONTHS,
                         ADD_SECONDS, ADD_WEEKS, ADD_YEARS, CURRENT_DATE, CURRENT_TIMESTAMP, LOCALTIMESTAMP, SYSDATE,
                         SYSTIMESTAMP, CAST, TO_CHAR, TO_DATE, TO_NUMBER, TO_TIMESTAMP, CASE, CURRENT_SCHEMA,
-                        CURRENT_USER, NULLIFZERO, ZEROIFNULL) //
+                        CURRENT_USER, NULLIFZERO, ZEROIFNULL, FROM_POSIX_TIME, HOUR, INITCAP) //
                 .build();
-    }
-
-    /**
-     * Get the DB2 dialect name.
-     *
-     * @return always "DB2"
-     */
-    public static String getPublicName() {
-        return NAME;
     }
 
     @Override

@@ -26,7 +26,9 @@ import com.exasol.adapter.dialects.SqlDialectFactory;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationVisitor;
 import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.metadata.*;
+import com.exasol.adapter.metadata.ColumnMetadata;
+import com.exasol.adapter.metadata.DataType;
+import com.exasol.adapter.metadata.TableMetadata;
 import com.exasol.adapter.sql.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -199,6 +201,14 @@ class DB2SqlGenerationVisitorTest {
                 .builder(argument).orderBy(orderBy).separator(new SqlLiteralString("'")).build();
         assertThat(this.visitor.visit(sqlFunctionAggregateGroupConcat),
                 equalTo("LISTAGG('test', '''') WITHIN GROUP(ORDER BY \"\"\"test_column\" DESC, \"test_column2\"\"\")"));
+    }
+
+    @Test
+    void testGetFromPosixTime() throws AdapterException {
+        final List<SqlNode> arguments = List.of(new SqlLiteralExactnumeric(BigDecimal.ONE));
+        final SqlFunctionScalar sqlFunctionScalar = new SqlFunctionScalar(ScalarFunction.FROM_POSIX_TIME, arguments);
+        assertThat(this.visitor.visit(sqlFunctionScalar),
+                equalTo("ADD_SECONDS('1970-01-01 00:00:00', 1)"));
     }
 
     private static SqlNode getTestSqlNode() {

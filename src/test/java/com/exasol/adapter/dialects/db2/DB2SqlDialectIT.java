@@ -237,6 +237,33 @@ class DB2SqlDialectIT {
                         .matches());
     }
 
+    @Test
+    void testScalarFunctionFromPosixTime() throws SQLException {
+        final String table = createSingleColumnTable("INT", List.of("1"), "FROM_POSIX_TIME");
+        assertVsQuery("SELECT FROM_POSIX_TIME(C1) FROM " + table, //
+                table() //
+                        .row(Timestamp.valueOf("1970-01-01 00:00:01.0")) //
+                        .matches());
+    }
+
+    @Test
+    void testScalarFunctionHour() throws SQLException {
+        final String table = createSingleColumnTable("TIMESTAMP", List.of("'9999-12-31 23.59.59'"), "HOUR");
+        assertVsQuery("SELECT HOUR(C1) FROM " + table, //
+                table() //
+                        .row(23) //
+                        .matches(NO_JAVA_TYPE_CHECK));
+    }
+
+    @Test
+    void testScalarFunctionInitcap() throws SQLException {
+        final String table = createSingleColumnTable("VARCHAR(32672)", List.of("'ExAsOl is here'"), "INITCAP");
+        assertVsQuery("SELECT INITCAP(C1) FROM " + table, //
+                table() //
+                        .row("Exasol Is Here") //
+                        .matches());
+    }
+
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);
     }

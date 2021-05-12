@@ -13,8 +13,6 @@ import com.exasol.adapter.sql.*;
  * This class generates SQL queries for the {@link DB2SqlDialect}.
  */
 public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
-    private static final List<String> TYPE_NAMES_REQUIRING_CAST = List.of("TIMESTAMP", "DECFLOAT", "CLOB", "XML",
-            "TIME");
     private static final List<String> TYPE_NAMES_NOT_SUPPORTED = List.of("BLOB");
 
     /**
@@ -25,14 +23,6 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
      */
     public DB2SqlGenerationVisitor(final SqlDialect dialect, final SqlGenerationContext context) {
         super(dialect, context);
-    }
-
-    protected List<String> getListOfTypeNamesRequiringCast() {
-        return TYPE_NAMES_REQUIRING_CAST;
-    }
-
-    protected List<String> getListOfTypeNamesNotSupported() {
-        return TYPE_NAMES_NOT_SUPPORTED;
     }
 
     @Override
@@ -155,9 +145,16 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
             return getNullZero(function, "IFNULL(");
         case DIV:
             return getDiv(function);
+        case FROM_POSIX_TIME:
+            return getFromPosixTime(function);
         default:
             return super.visit(function);
         }
+    }
+
+    private String getFromPosixTime(final SqlFunctionScalar function) throws AdapterException {
+        final String argument = function.getArguments().get(0).accept(this);
+        return "ADD_SECONDS('1970-01-01 00:00:00', " + argument + ")";
     }
 
     private String getDiv(final SqlFunctionScalar function) throws AdapterException {
@@ -180,11 +177,7 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
         for (final SqlNode node : function.getArguments()) {
             argumentsSql.add(node.accept(this));
         }
-        final StringBuilder builder = new StringBuilder();
-        builder.append(expression);
-        builder.append(argumentsSql.get(0));
-        builder.append(", 0)");
-        return builder.toString();
+        return expression + argumentsSql.get(0) + ", 0)";
     }
 
     private String getAddTimeOrDate(final SqlFunctionScalar function) throws AdapterException {
