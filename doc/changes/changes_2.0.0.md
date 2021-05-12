@@ -1,4 +1,4 @@
-# DB2 Virtual Schemas 2.0.0, released 2021-05-??
+# DB2 Virtual Schemas 2.0.0, released 2021-05-12
 
 Code name: Removed `SQL_DIALECT` property, JOIN pushdown
 
