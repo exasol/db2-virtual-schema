@@ -31,8 +31,6 @@ public class DB2ColumnMetadataReader extends BaseColumnMetadataReader {
         switch (jdbcTypeDescription.getJdbcType()) {
         case Types.OTHER:
             return DataType.createVarChar(DataType.MAX_EXASOL_VARCHAR_SIZE, DataType.ExaCharset.UTF8);
-        case Types.TIMESTAMP:
-            return DataType.createVarChar(32, DataType.ExaCharset.UTF8);
         case Types.VARCHAR:
         case Types.NVARCHAR:
         case Types.LONGVARCHAR:

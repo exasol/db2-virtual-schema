@@ -118,7 +118,7 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 | INTEGER       | ✓         | DECIMAL(10,0)              |
 | SMALLINT      | ✓         | DECIMAL(5,0)               |
 | TIME          | ✓         | VARCHAR(100)               |
-| TIMESTAMP     | ✓         | VARCHAR(32)                |
+| TIMESTAMP     | ✓         | TIMESTAMP                  |
 | REAL          | ✓         | DOUBLE PRECISION           |
 | VARCHAR       | ✓         | VARCHAR                    |
 | VARBINARY     | ×         |                            |
@@ -127,7 +127,7 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 
 ## Casting of Functions
 
-* `LIMIT` will replaced by `FETCH FIRST x ROWS ONLY`
+* `LIMIT` is replaced by `FETCH FIRST x ROWS ONLY`
 * `OFFSET` is currently not supported as only DB2 V11 support this natively
 * `ADD_DAYS`, `ADD_WEEKS` ... will be replaced by `COLUMN + DAYS`, `COLUMN + ....`
 

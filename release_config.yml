@@ -9,3 +9,6 @@ community-project-description: |
   accessible from an Exasol database through regular SQL commands.
   The contents of the external DB2 database are mapped to virtual tables which
   look like and can be queried as any regular Exasol table.
+release-platforms:
+  - GitHub
+  - Community

@@ -1,4 +1,4 @@
-# DB2 Virtual Schemas 2.0.0, released 2021-05-??
+# DB2 Virtual Schemas 2.0.0, released 2021-05-12
 
 Code name: Removed `SQL_DIALECT` property, JOIN pushdown
 
@@ -11,6 +11,7 @@ Also, the `SQL_DIALECT` property used when executing a `CREATE VIRTUAL SCHEMA` f
 
 * #3: Unified error messages with `error-reporting-java`. 
 * #10: Enabled JOIN capabilities for the pushdown.
+* #6: Added additional capabilities for scalar function: HOUR, INITCAP.
 
 ## Dependency Updates
 

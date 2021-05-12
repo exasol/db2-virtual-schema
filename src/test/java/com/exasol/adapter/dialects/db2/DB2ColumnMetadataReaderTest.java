@@ -32,13 +32,6 @@ class DB2ColumnMetadataReaderTest {
                 equalTo(DataType.createVarChar(DataType.MAX_EXASOL_VARCHAR_SIZE, DataType.ExaCharset.UTF8)));
     }
 
-    @Test
-    void testMapJdbcTypetimestamp() {
-        final JDBCTypeDescription jdbcTypeDescription = new JDBCTypeDescription(Types.TIMESTAMP, 0, 0, 0, "");
-        assertThat(this.db2ColumnMetadataReader.mapJdbcType(jdbcTypeDescription),
-                equalTo(DataType.createVarChar(32, DataType.ExaCharset.UTF8)));
-    }
-
     @ValueSource(ints = { Types.VARCHAR, Types.NVARCHAR, Types.LONGNVARCHAR, Types.CHAR, Types.NCHAR,
             Types.LONGNVARCHAR })
     @ParameterizedTest

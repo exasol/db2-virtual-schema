@@ -26,7 +26,9 @@ import com.exasol.adapter.dialects.SqlDialectFactory;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationVisitor;
 import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.metadata.*;
+import com.exasol.adapter.metadata.ColumnMetadata;
+import com.exasol.adapter.metadata.DataType;
+import com.exasol.adapter.metadata.TableMetadata;
 import com.exasol.adapter.sql.*;
 
 @ExtendWith(MockitoExtension.class)
