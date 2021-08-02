@@ -1,4 +1,4 @@
-# Virtual Schema for DB2 2.0.1, released 2021-08-02
+# Virtual Schema for DB2 2.0.1, released 2021-08-03
 
 Code name: Dependency Updates
 
