@@ -12,3 +12,4 @@ community-project-description: |
 release-platforms:
   - GitHub
   - Community
+  - Jira

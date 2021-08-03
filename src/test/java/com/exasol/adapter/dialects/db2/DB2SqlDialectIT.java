@@ -6,6 +6,7 @@ import static com.exasol.matcher.ResultSetStructureMatcher.table;
 import static com.exasol.matcher.TypeMatchMode.NO_JAVA_TYPE_CHECK;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
@@ -44,7 +45,7 @@ class DB2SqlDialectIT {
 
     @BeforeAll
     static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
-            JdbcDatabaseContainer.NoDriverFoundException, SQLException {
+            JdbcDatabaseContainer.NoDriverFoundException, SQLException, FileNotFoundException {
         final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket());
         exasolConnection = EXASOL.createConnection("");
         db2Connection = DB2.createConnection("");
@@ -57,7 +58,7 @@ class DB2SqlDialectIT {
     }
 
     private static AdapterScript installVirtualSchemaAdapter(final ExasolSchema adapterSchema)
-            throws InterruptedException, BucketAccessException, TimeoutException {
+            throws InterruptedException, BucketAccessException, TimeoutException, FileNotFoundException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         bucket.uploadFile(PATH_TO_VIRTUAL_SCHEMAS_JAR, VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION);
         return adapterSchema.createAdapterScriptBuilder("EXASOL_ADAPTER").language(JAVA)
@@ -74,7 +75,7 @@ class DB2SqlDialectIT {
                 DB2.getPassword());
     }
 
-    private static void uploadDriverToBucket() throws InterruptedException, BucketAccessException, TimeoutException {
+    private static void uploadDriverToBucket() throws BucketAccessException, TimeoutException, FileNotFoundException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         final Path pathToSettingsFile = Path.of("src", "test", "resources", JDBC_DRIVER_CONFIGURATION_FILE_NAME);
         bucket.uploadFile(JDBC_DRIVER_PATH, "drivers/jdbc/" + JDBC_DRIVER_NAME);

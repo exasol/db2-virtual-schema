@@ -20,3 +20,4 @@ local
 Scripts
 .dbeaver*
 **/*.log
+pom.xml.versionsBackup
