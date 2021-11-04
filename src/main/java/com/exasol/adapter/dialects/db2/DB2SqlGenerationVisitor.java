@@ -14,6 +14,7 @@ import com.exasol.adapter.sql.*;
  */
 public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
     private static final List<String> TYPE_NAMES_NOT_SUPPORTED = List.of("BLOB");
+    private final SqlGenerationContext context;
 
     /**
      * Create a new instance of the {@link DB2SqlGenerationVisitor}.
@@ -23,6 +24,7 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
      */
     public DB2SqlGenerationVisitor(final SqlDialect dialect, final SqlGenerationContext context) {
         super(dialect, context);
+        this.context = context;
     }
 
     @Override
@@ -79,6 +81,19 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
             return super.visit(select);
         } else {
             return getSelect(select);
+        }
+    }
+
+    @Override
+    public String visit(final SqlTable table) {
+        final String schemaPrefix = getDialect().applyQuote(this.context.getSchemaName())
+                + getDialect().getTableCatalogAndSchemaSeparator();
+        if (table.hasAlias()) {
+            return schemaPrefix + getDialect().applyQuote(table.getName()) + " "
+                    + getDialect().applyQuote(table.getAlias());
+        } else {
+            return schemaPrefix + getDialect().applyQuote(table.getName()) + " AS "
+                    + getDialect().applyQuote(table.getName());
         }
     }
 

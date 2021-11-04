@@ -26,9 +26,7 @@ import com.exasol.adapter.dialects.SqlDialectFactory;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationVisitor;
 import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.metadata.ColumnMetadata;
-import com.exasol.adapter.metadata.DataType;
-import com.exasol.adapter.metadata.TableMetadata;
+import com.exasol.adapter.metadata.*;
 import com.exasol.adapter.sql.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,7 +84,7 @@ class DB2SqlGenerationVisitorTest {
         final SqlStatementSelect select = (SqlStatementSelect) getTestSqlNode();
         assertThat(this.visitor.visit(select), //
                 equalTo("SELECT \"USER_ID\", " //
-                        + "COUNT(\"URL\") FROM \"test_schema\".\"CLICKS\" " //
+                        + "COUNT(\"URL\") FROM \"test_schema\".\"CLICKS\" AS \"CLICKS\" " //
                         + "WHERE 1 < \"USER_ID\" " //
                         + "GROUP BY \"USER_ID\" " //
                         + "HAVING 1 < COUNT(\"URL\") " //
