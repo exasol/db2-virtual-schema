@@ -16,7 +16,7 @@
 
 # Overview
 
-The **DB2 Virtual Schema** provides an abstraction layer that makes an external [DB2](https://www.ibm.com/db2/) accessible from an Exasol database through regular SQL commands. The contents of the external DB2 database are mapped to virtual tables which look like and can be queried as any regular Exasol table.
+The **DB2 Virtual Schema** provides an abstraction layer that makes an external [DB2](https://www.ibm.com/analytics/db2) accessible from an Exasol database through regular SQL commands. The contents of the external DB2 database are mapped to virtual tables which look like and can be queried as any regular Exasol table.
 
 If you want to set up a Virtual Schema for a different database system, please head over to the [Virtual Schemas Repository][virtual-schemas].
 

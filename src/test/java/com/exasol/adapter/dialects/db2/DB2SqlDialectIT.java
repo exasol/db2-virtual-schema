@@ -30,12 +30,12 @@ import com.exasol.udfdebugging.UdfTestSetup;
 @Tag("integration")
 @Testcontainers
 class DB2SqlDialectIT {
-    private static final String SOURCE_SCHEMA = "DB2INST1";
+    private static final String SOURCE_SCHEMA = "TEST_SCHEMA";
     @Container
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
             EXASOL_DOCKER_REFERENCE).withReuse(true);
     @Container
-    private static final Db2Container DB2 = new Db2Container(EDB2_DOCKER_REFERENCE);
+    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE);
     private static Connection exasolConnection;
     private static Connection db2Connection;
     private static ExasolObjectFactory objectFactory;
@@ -49,6 +49,9 @@ class DB2SqlDialectIT {
         final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket());
         exasolConnection = EXASOL.createConnection("");
         db2Connection = DB2.createConnection("");
+        try (final Statement statement = db2Connection.createStatement()) {
+            statement.execute("CREATE SCHEMA " + SOURCE_SCHEMA);
+        }
         objectFactory = new ExasolObjectFactory(exasolConnection,
                 ExasolObjectConfiguration.builder().withJvmOptions(udfTestSetup.getJvmOptions()).build());
         adapterSchema = objectFactory.createSchema("ADAPTER_SCHEMA");
@@ -256,6 +259,18 @@ class DB2SqlDialectIT {
                         .matches());
     }
 
+    @Test
+    void testLeftJoinWithTableAliases() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL AS LT LEFT JOIN TR AS RT ON LT.C1 = RT.C1 ORDER BY LT.C1", //
+                table() //
+                        .row("K1", "L1", "K1", "R1") //
+                        .row("K3", "L3", null, null) //
+                        .row(null, "L2", null, null) //
+                        .matches());
+    }
+
+
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);
     }
@@ -264,9 +279,9 @@ class DB2SqlDialectIT {
             throws SQLException {
         final String tableName = "SINGLE_COLUMN_TABLE_" + suffix;
         try (final Statement statement = db2Connection.createStatement()) {
-            statement.execute("CREATE TABLE " + tableName + "(C1 " + sourceType + ")");
+            statement.execute("CREATE TABLE " + SOURCE_SCHEMA + "." + tableName + "(C1 " + sourceType + ")");
             for (final String value : values) {
-                statement.execute("INSERT INTO " + tableName + " VALUES (" + value + ")");
+                statement.execute("INSERT INTO " + SOURCE_SCHEMA + "." + tableName + " VALUES (" + value + ")");
             }
         }
         return tableName;
@@ -310,16 +325,16 @@ class DB2SqlDialectIT {
 
     private void createTablesForJoinTest() throws SQLException {
         try (final Statement statement = db2Connection.createStatement()) {
-            statement.execute("DROP TABLE TL IF EXISTS");
-            statement.execute("CREATE TABLE TL (C1 VARCHAR(2), C2 VARCHAR(2))");
-            statement.execute("INSERT INTO TL VALUES ('K1', 'L1')");
-            statement.execute("INSERT INTO TL VALUES (null, 'L2')");
-            statement.execute("INSERT INTO TL VALUES ('K3', 'L3')");
-            statement.execute("DROP TABLE TR IF EXISTS");
-            statement.execute("CREATE TABLE TR (C1 VARCHAR(2), C2 VARCHAR(2))");
-            statement.execute("INSERT INTO TR VALUES ('K1', 'R1')");
-            statement.execute("INSERT INTO TR VALUES ('K2', 'R2')");
-            statement.execute("INSERT INTO TR VALUES (null, 'R3')");
+            statement.execute("DROP TABLE TEST_SCHEMA.TL IF EXISTS");
+            statement.execute("CREATE TABLE TEST_SCHEMA.TL (C1 VARCHAR(2), C2 VARCHAR(2))");
+            statement.execute("INSERT INTO TEST_SCHEMA.TL VALUES ('K1', 'L1')");
+            statement.execute("INSERT INTO TEST_SCHEMA.TL VALUES (null, 'L2')");
+            statement.execute("INSERT INTO TEST_SCHEMA.TL VALUES ('K3', 'L3')");
+            statement.execute("DROP TABLE TEST_SCHEMA.TR IF EXISTS");
+            statement.execute("CREATE TABLE TEST_SCHEMA.TR (C1 VARCHAR(2), C2 VARCHAR(2))");
+            statement.execute("INSERT INTO TEST_SCHEMA.TR VALUES ('K1', 'R1')");
+            statement.execute("INSERT INTO TEST_SCHEMA.TR VALUES ('K2', 'R2')");
+            statement.execute("INSERT INTO TEST_SCHEMA.TR VALUES (null, 'R3')");
         }
     }
 

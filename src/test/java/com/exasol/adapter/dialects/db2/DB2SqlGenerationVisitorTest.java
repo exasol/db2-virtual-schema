@@ -26,9 +26,7 @@ import com.exasol.adapter.dialects.SqlDialectFactory;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationVisitor;
 import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.metadata.ColumnMetadata;
-import com.exasol.adapter.metadata.DataType;
-import com.exasol.adapter.metadata.TableMetadata;
+import com.exasol.adapter.metadata.*;
 import com.exasol.adapter.sql.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,7 +84,7 @@ class DB2SqlGenerationVisitorTest {
         final SqlStatementSelect select = (SqlStatementSelect) getTestSqlNode();
         assertThat(this.visitor.visit(select), //
                 equalTo("SELECT \"USER_ID\", " //
-                        + "COUNT(\"URL\") FROM \"test_schema\".\"CLICKS\" " //
+                        + "COUNT(\"URL\") FROM \"test_schema\".\"CLICKS\" AS \"CLICKS\" " //
                         + "WHERE 1 < \"USER_ID\" " //
                         + "GROUP BY \"USER_ID\" " //
                         + "HAVING 1 < COUNT(\"URL\") " //
@@ -263,5 +261,41 @@ class DB2SqlGenerationVisitorTest {
                     .build());
             return new TableMetadata("CLICKS", "", columns, "");
         }
+    }
+
+    @Test
+    void testVisitSqlStatementSelectWithJoins() throws AdapterException {
+        final ColumnMetadata columnLeftMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+                .build();
+        final ColumnMetadata columnRightMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+                .build();
+        final SqlColumn columnLeft = new SqlColumn(1, columnLeftMetadata, "TL");
+        final SqlColumn columnRight = new SqlColumn(1, columnRightMetadata, "TR");
+        final SqlSelectList selectList = SqlSelectList.createRegularSelectList(List.of(columnLeft));
+        final SqlNode tableLeft = new SqlTable("TL", null);
+        final SqlNode tableRight = new SqlTable("TR", null);
+        final SqlNode condition = new SqlPredicateEqual(columnLeft, columnRight);
+        final SqlNode join = new SqlJoin(tableLeft, tableRight, condition, JoinType.INNER);
+        final SqlStatementSelect select = SqlStatementSelect.builder().selectList(selectList).fromClause(join).build();
+        assertThat(this.visitor.visit(select), //
+                equalTo("SELECT \"TL\".\"C1\" FROM \"test_schema\".\"TL\" AS \"TL\" INNER JOIN \"test_schema\".\"TR\" AS \"TR\" ON \"TL\".\"C1\" = \"TR\".\"C1\""));
+    }
+
+    @Test
+    void testVisitSqlStatementSelectWithJoinsAndAliases() throws AdapterException {
+        final ColumnMetadata columnLeftMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+                .build();
+        final ColumnMetadata columnRightMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+                .build();
+        final SqlColumn columnLeft = new SqlColumn(1, columnLeftMetadata, "TL", "LEFT");
+        final SqlColumn columnRight = new SqlColumn(1, columnRightMetadata, "TR", "RIGHT");
+        final SqlSelectList selectList = SqlSelectList.createRegularSelectList(List.of(columnLeft));
+        final SqlNode tableLeft = new SqlTable("TL", "LEFT", null);
+        final SqlNode tableRight = new SqlTable("TR", "RIGHT", null);
+        final SqlNode condition = new SqlPredicateEqual(columnLeft, columnRight);
+        final SqlNode join = new SqlJoin(tableLeft, tableRight, condition, JoinType.INNER);
+        final SqlStatementSelect select = SqlStatementSelect.builder().selectList(selectList).fromClause(join).build();
+        assertThat(this.visitor.visit(select), //
+                equalTo("SELECT \"LEFT\".\"C1\" FROM \"test_schema\".\"TL\" AS \"LEFT\" INNER JOIN \"test_schema\".\"TR\" AS \"RIGHT\" ON \"LEFT\".\"C1\" = \"RIGHT\".\"C1\""));
     }
 }

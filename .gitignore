@@ -21,3 +21,11 @@ Scripts
 .dbeaver*
 **/*.log
 pom.xml.versionsBackup
+.directory
+venv/
+~*
+*.lock
+*.bak
+*.orig
+*.old
+*.md.html
