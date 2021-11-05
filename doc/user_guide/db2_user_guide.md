@@ -1,6 +1,6 @@
 # DB2 SQL Dialect User Guide
 
-[DB2](https://www.ibm.com/db2/) is an IBM database product. It is a Relational Database Management System (RDBMS). DB2 is extended with the support of Object-Oriented features and non-relational structures with XML.
+[DB2](https://www.ibm.com/analytics/db2) is an IBM database product. It is a Relational Database Management System (RDBMS). DB2 is extended with the support of Object-Oriented features and non-relational structures with XML.
 
 ## Registering the JDBC Driver in EXAOperation
 
