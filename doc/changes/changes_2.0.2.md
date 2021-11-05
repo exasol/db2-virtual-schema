@@ -1,6 +1,6 @@
-# Virtual Schema for DB2 2.0.2, released 2021-11-??
+# Virtual Schema for DB2 2.0.2, released 2021-11-05
 
-Code name: Fix quries error when selecting from non-default schema
+Code name: Fixed non-default schema query bug
 
 ## Summary
 
