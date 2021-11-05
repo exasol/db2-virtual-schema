@@ -259,6 +259,18 @@ class DB2SqlDialectIT {
                         .matches());
     }
 
+    @Test
+    void testLeftJoinWithTableAliases() throws SQLException {
+        createTablesForJoinTest();
+        assertVsQuery("SELECT * FROM TL AS LT LEFT JOIN TR AS RT ON LT.C1 = RT.C1 ORDER BY LT.C1", //
+                table() //
+                        .row("K1", "L1", "K1", "R1") //
+                        .row("K3", "L3", null, null) //
+                        .row(null, "L2", null, null) //
+                        .matches());
+    }
+
+
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);
     }

@@ -88,13 +88,8 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
     public String visit(final SqlTable table) {
         final String schemaPrefix = getDialect().applyQuote(this.context.getSchemaName())
                 + getDialect().getTableCatalogAndSchemaSeparator();
-        if (table.hasAlias()) {
-            return schemaPrefix + getDialect().applyQuote(table.getName()) + " "
-                    + getDialect().applyQuote(table.getAlias());
-        } else {
-            return schemaPrefix + getDialect().applyQuote(table.getName()) + " AS "
-                    + getDialect().applyQuote(table.getName());
-        }
+        final String tableAlias = table.hasAlias() ? table.getAlias() : table.getName();
+        return schemaPrefix + getDialect().applyQuote(table.getName()) + " AS " + getDialect().applyQuote(tableAlias);
     }
 
     private String getSelect(final SqlStatementSelect select) throws AdapterException {
