@@ -56,7 +56,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.3-db2-2.0.2.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.4-db2-2.0.3.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
 /
@@ -68,7 +68,7 @@ CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.3-db2-2.0.2.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.4-db2-2.0.3.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cisuz.jar;
@@ -135,6 +135,6 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 
 In the following matrix you find combinations of JDBC driver and dialect version that we tested.
 
-| Virtual Schema Version | DB2 Version         | Driver Name | Driver Version |
-|------------------------|---------------------|-------------|----------------|
-| 2.0.0                  | ibmcom/db2:11.5.5.0 | db2jcc     | See pom.xml    |
+| Virtual Schema Version | DB2 Version           | Driver Name | Driver Version |
+|------------------------|---------------------- |-------------|----------------|
+| 2.0.0                  | ibmcom/db2:11.5.7.0a | db2jcc      | See pom.xml    |

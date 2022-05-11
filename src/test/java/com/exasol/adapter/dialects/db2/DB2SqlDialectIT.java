@@ -19,6 +19,7 @@ import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerMachineClient;
 
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
@@ -46,8 +47,9 @@ class DB2SqlDialectIT {
     @BeforeAll
     static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
             JdbcDatabaseContainer.NoDriverFoundException, SQLException, FileNotFoundException {
-        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket());
         exasolConnection = EXASOL.createConnection("");
+        final UdfTestSetup udfTestSetup = new UdfTestSetup(getTestHostIpAddress(), EXASOL.getDefaultBucket(),
+                exasolConnection);
         db2Connection = DB2.createConnection("");
         try (final Statement statement = db2Connection.createStatement()) {
             statement.execute("CREATE SCHEMA " + SOURCE_SCHEMA);
@@ -58,6 +60,14 @@ class DB2SqlDialectIT {
         uploadDriverToBucket();
         adapterScript = installVirtualSchemaAdapter(adapterSchema);
         jdbcConnectionDefinition = createAdapterConnectionDefinition();
+    }
+
+    private static String getTestHostIpAddress() {
+        if (DockerMachineClient.instance().isInstalled()) {
+            return EXASOL.getTestHostIpAddress();
+        } else {
+            return EXASOL.getHostIp();
+        }
     }
 
     private static AdapterScript installVirtualSchemaAdapter(final ExasolSchema adapterSchema)
@@ -90,8 +100,12 @@ class DB2SqlDialectIT {
         dropAll(adapterScript, adapterSchema);
         adapterScript = null;
         adapterSchema = null;
-        exasolConnection.close();
-        db2Connection.close();
+        if (exasolConnection != null) {
+            exasolConnection.close();
+        }
+        if (db2Connection != null) {
+            db2Connection.close();
+        }
     }
 
     private static void dropAll(final DatabaseObject... databaseObjects) {
@@ -269,7 +283,6 @@ class DB2SqlDialectIT {
                         .row(null, "L2", null, null) //
                         .matches());
     }
-
 
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);

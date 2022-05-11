@@ -1,1 +1,1 @@
-ibmcom/db2:11.5.6.0a
+ibmcom/db2:11.5.7.0a
