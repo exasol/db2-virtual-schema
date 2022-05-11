@@ -47,7 +47,7 @@ class DB2SqlDialectIT {
     static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
             JdbcDatabaseContainer.NoDriverFoundException, SQLException, FileNotFoundException {
         exasolConnection = EXASOL.createConnection("");
-        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket(),
+        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getTestHostIpAddress(), EXASOL.getDefaultBucket(),
                 exasolConnection);
         db2Connection = DB2.createConnection("");
         try (final Statement statement = db2Connection.createStatement()) {
