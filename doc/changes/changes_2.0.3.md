@@ -1,4 +1,4 @@
-# Virtual Schema for DB2 2.0.3, released 2022-??-??
+# Virtual Schema for DB2 2.0.3, released 2022-05-11
 
 Code name: 2.0.3: Upgraded dependencies compared to 2.0.2
 
