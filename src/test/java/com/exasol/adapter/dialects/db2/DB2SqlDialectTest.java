@@ -90,10 +90,10 @@ class DB2SqlDialectTest {
 
     @Test
     void testCreateRemoteMetadataReaderConnectionFails() throws SQLException {
-        when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException());
+        when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException("mock"));
         final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
                 this.dialect::createRemoteMetadataReader);
-        assertThat(exception.getMessage(), containsString("E-VSDB2-1"));
+        assertThat(exception.getMessage(), equalTo("E-VSDB2-1: Unable to create DB2 remote metadata reader. Caused by: mock"));
     }
 
     @Test

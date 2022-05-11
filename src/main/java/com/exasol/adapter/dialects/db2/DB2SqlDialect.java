@@ -12,14 +12,10 @@ import java.util.Set;
 
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
-import com.exasol.adapter.dialects.AbstractSqlDialect;
-import com.exasol.adapter.dialects.QueryRewriter;
-import com.exasol.adapter.dialects.SqlGenerator;
+import com.exasol.adapter.dialects.*;
 import com.exasol.adapter.dialects.rewriting.ImportIntoTemporaryTableQueryRewriter;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
-import com.exasol.adapter.jdbc.ConnectionFactory;
-import com.exasol.adapter.jdbc.RemoteMetadataReader;
-import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
+import com.exasol.adapter.jdbc.*;
 import com.exasol.errorreporting.ExaError;
 
 /**
@@ -45,8 +41,8 @@ public class DB2SqlDialect extends AbstractSqlDialect {
             return new DB2MetadataReader(this.connectionFactory.getConnection(), this.properties);
         } catch (final SQLException exception) {
             throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VSDB2-1")
-                    .message("Unable to create DB2 remote metadata reader. Caused by: {{cause}}")
-                    .unquotedParameter("cause", exception.getMessage()).toString(), exception);
+                    .message("Unable to create DB2 remote metadata reader. Caused by: {{cause|uq}}")
+                    .parameter("cause", exception.getMessage()).toString(), exception);
         }
     }
 
