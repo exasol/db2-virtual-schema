@@ -13,6 +13,10 @@ Code name: 2.0.3: Upgraded dependencies compared to 2.0.2
 * Updated `com.exasol:error-reporting-java:0.4.0` to `0.4.1`
 * Updated `com.exasol:virtual-schema-common-jdbc:9.0.3` to `9.0.4`
 
+### Runtime Dependency Updates
+
+* Added `org.glassfish:jakarta.json:2.0.1`
+
 ### Test Dependency Updates
 
 * Updated `com.exasol:exasol-testcontainers:4.0.0` to `6.1.1`
