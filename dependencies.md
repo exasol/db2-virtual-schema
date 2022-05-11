@@ -22,7 +22,7 @@
 | [Testcontainers :: JUnit Jupiter Extension][18] | [MIT][19]                                            |
 | [Testcontainers :: JDBC :: DB2][18]             | [MIT][19]                                            |
 | [Matcher for SQL Result Sets][22]               | [MIT][1]                                             |
-| [Test Database Builder for Java][24]            | [MIT][1]                                             |
+| [Test Database Builder for Java][24]            | [MIT License][25]                                    |
 | IBM Data Server Driver for JDBC and SQLJ        | [International Program License Agreement (IPLA)][26] |
 
 ## Plugin Dependencies
@@ -52,18 +52,20 @@
 [4]: https://www.eclemma.org/jacoco/index.html
 [41]: https://github.com/exasol/project-keeper-maven-plugin
 [2]: https://github.com/exasol/error-reporting-java
+[24]: https://github.com/exasol/test-db-builder-java/
 [48]: http://www.apache.org/licenses/LICENSE-2.0.txt
 [29]: https://maven.apache.org/surefire/maven-surefire-plugin/
+[26]: https://www-40.ibm.com/software/sla/sladb.nsf/lilookup/1024954E51C94B03002587A4003CB520?OpenDocument
 [1]: https://opensource.org/licenses/MIT
 [14]: https://github.com/mockito/mockito
 [51]: https://maven.apache.org/surefire/maven-failsafe-plugin/
-[24]: https://github.com/exasol/test-db-builder-java
 [37]: http://www.mojohaus.org/versions-maven-plugin/
 [11]: http://opensource.org/licenses/BSD-3-Clause
 [31]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [19]: http://opensource.org/licenses/MIT
 [57]: https://maven.apache.org/plugins/maven-resources-plugin/
 [0]: https://github.com/exasol/virtual-schema-common-jdbc
+[25]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
 [55]: https://maven.apache.org/plugins/maven-clean-plugin/
 [5]: https://www.eclipse.org/legal/epl-2.0/
 [16]: https://github.com/exasol/exasol-testcontainers
@@ -75,13 +77,12 @@
 [63]: https://maven.apache.org/plugins/maven-site-plugin/
 [30]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [35]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
+[8]: https://github.com/exasol/udf-debugging-java/
 [13]: https://www.eclipse.org/legal/epl-v20.html
 [59]: http://maven.apache.org/plugins/maven-install-plugin/
 [12]: https://junit.org/junit5/
 [47]: https://sonatype.github.io/ossindex-maven/maven-plugin/
 [18]: https://testcontainers.org
-[26]: http://www-03.ibm.com/software/sla/sladb.nsf/lilookup/B290E426DA2F1ECC852586FC006262BE?OpenDocument
-[8]: https://github.com/exasol/udf-debugging-java
 [10]: http://hamcrest.org/JavaHamcrest/
 [61]: http://maven.apache.org/plugins/maven-deploy-plugin/
 [39]: https://github.com/exasol/artifact-reference-checker-maven-plugin
