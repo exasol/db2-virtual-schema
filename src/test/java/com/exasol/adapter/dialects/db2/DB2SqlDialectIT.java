@@ -46,8 +46,9 @@ class DB2SqlDialectIT {
     @BeforeAll
     static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
             JdbcDatabaseContainer.NoDriverFoundException, SQLException, FileNotFoundException {
-        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket());
         exasolConnection = EXASOL.createConnection("");
+        final UdfTestSetup udfTestSetup = new UdfTestSetup(EXASOL.getHostIp(), EXASOL.getDefaultBucket(),
+                exasolConnection);
         db2Connection = DB2.createConnection("");
         try (final Statement statement = db2Connection.createStatement()) {
             statement.execute("CREATE SCHEMA " + SOURCE_SCHEMA);
@@ -269,7 +270,6 @@ class DB2SqlDialectIT {
                         .row(null, "L2", null, null) //
                         .matches());
     }
-
 
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
         return createSingleColumnTable(sourceType, values, sourceType);
