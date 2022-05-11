@@ -93,7 +93,7 @@ class DB2SqlDialectTest {
         when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException());
         final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
                 this.dialect::createRemoteMetadataReader);
-        assertThat(exception.getMessage(), containsString("E-VS-DB2-1"));
+        assertThat(exception.getMessage(), containsString("E-VSDB2-1"));
     }
 
     @Test
