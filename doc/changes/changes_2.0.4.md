@@ -14,6 +14,20 @@ This release updates dependencies to fix the following vulnerabilities:
 
 ## Dependency Updates
 
+### Compile Dependency Updates
+
+* Updated `com.exasol:virtual-schema-common-jdbc:9.0.4` to `9.0.5`
+
+### Test Dependency Updates
+
+* Updated `com.exasol:exasol-testcontainers:6.1.1` to `6.1.2`
+* Updated `com.exasol:test-db-builder-java:3.3.2` to `3.3.3`
+* Updated `com.exasol:udf-debugging-java:0.6.1` to `0.6.3`
+* Updated `com.exasol:virtual-schema-common-jdbc:9.0.4` to `9.0.5`
+* Updated `org.mockito:mockito-junit-jupiter:4.5.1` to `4.6.1`
+* Updated `org.testcontainers:db2:1.17.1` to `1.17.2`
+* Updated `org.testcontainers:junit-jupiter:1.17.1` to `1.17.2`
+
 ### Plugin Dependency Updates
 
 * Updated `com.exasol:artifact-reference-checker-maven-plugin:0.4.1` to `0.4.0`

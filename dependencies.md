@@ -3,25 +3,25 @@
 
 ## Compile Dependencies
 
-| Dependency                      | License  |
-| ------------------------------- | -------- |
-| [Virtual Schema Common JDBC][0] | [MIT][1] |
-| [error-reporting-java][2]       | [MIT][1] |
+| Dependency                      | License          |
+| ------------------------------- | ---------------- |
+| [Virtual Schema Common JDBC][0] | [MIT License][1] |
+| [error-reporting-java][2]       | [MIT][3]         |
 
 ## Test Dependencies
 
 | Dependency                                      | License                                              |
 | ----------------------------------------------- | ---------------------------------------------------- |
 | [JaCoCo :: Agent][4]                            | [Eclipse Public License 2.0][5]                      |
-| [Virtual Schema Common JDBC][0]                 | [MIT][1]                                             |
-| [udf-debugging-java][8]                         | [MIT][1]                                             |
+| [Virtual Schema Common JDBC][0]                 | [MIT License][1]                                     |
+| [udf-debugging-java][8]                         | [MIT][3]                                             |
 | [Hamcrest][10]                                  | [BSD License 3][11]                                  |
 | [JUnit Jupiter (Aggregator)][12]                | [Eclipse Public License v2.0][13]                    |
 | [mockito-junit-jupiter][14]                     | [The MIT License][15]                                |
-| [Test containers for Exasol on Docker][16]      | [MIT][1]                                             |
+| [Test containers for Exasol on Docker][16]      | [MIT][3]                                             |
 | [Testcontainers :: JUnit Jupiter Extension][18] | [MIT][19]                                            |
 | [Testcontainers :: JDBC :: DB2][18]             | [MIT][19]                                            |
-| [Matcher for SQL Result Sets][22]               | [MIT][1]                                             |
+| [Matcher for SQL Result Sets][22]               | [MIT][3]                                             |
 | [Test Database Builder for Java][24]            | [MIT License][25]                                    |
 | IBM Data Server Driver for JDBC and SQLJ        | [International Program License Agreement (IPLA)][26] |
 
@@ -45,12 +45,12 @@
 | [Versions Maven Plugin][44]                             | [Apache License, Version 2.0][33]              |
 | [Apache Maven Assembly Plugin][46]                      | [Apache License, Version 2.0][33]              |
 | [Apache Maven JAR Plugin][48]                           | [Apache License, Version 2.0][33]              |
-| [Artifact reference checker and unifier][50]            | [MIT][1]                                       |
+| [Artifact reference checker and unifier][50]            | [MIT][3]                                       |
 | [Project keeper maven plugin][52]                       | [The MIT License][53]                          |
 | [Apache Maven Dependency Plugin][54]                    | [Apache License, Version 2.0][33]              |
 | [Maven Failsafe Plugin][56]                             | [Apache License, Version 2.0][33]              |
 | [JaCoCo :: Maven Plugin][58]                            | [Eclipse Public License 2.0][5]                |
-| [error-code-crawler-maven-plugin][60]                   | [MIT][1]                                       |
+| [error-code-crawler-maven-plugin][60]                   | [MIT][3]                                       |
 | [Maven Clean Plugin][62]                                | [The Apache Software License, Version 2.0][37] |
 | [Maven Resources Plugin][64]                            | [The Apache Software License, Version 2.0][37] |
 | [Maven Install Plugin][66]                              | [The Apache Software License, Version 2.0][37] |
@@ -64,7 +64,7 @@
 [42]: https://maven.apache.org/surefire/maven-surefire-plugin/
 [26]: https://www-40.ibm.com/software/sla/sladb.nsf/lilookup/1024954E51C94B03002587A4003CB520?OpenDocument
 [62]: http://maven.apache.org/plugins/maven-clean-plugin/
-[1]: https://opensource.org/licenses/MIT
+[3]: https://opensource.org/licenses/MIT
 [14]: https://github.com/mockito/mockito
 [56]: https://maven.apache.org/surefire/maven-failsafe-plugin/
 [36]: https://www.mojohaus.org/flatten-maven-plugin/
@@ -73,7 +73,6 @@
 [11]: http://opensource.org/licenses/BSD-3-Clause
 [32]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [19]: http://opensource.org/licenses/MIT
-[0]: https://github.com/exasol/virtual-schema-common-jdbc
 [25]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
 [5]: https://www.eclipse.org/legal/epl-2.0/
 [31]: http://www.gnu.org/licenses/lgpl.txt
@@ -90,9 +89,11 @@
 [34]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [8]: https://github.com/exasol/udf-debugging-java/
 [13]: https://www.eclipse.org/legal/epl-v20.html
+[1]: https://github.com/exasol/virtual-schema-common-jdbc/blob/main/LICENSE
 [66]: http://maven.apache.org/plugins/maven-install-plugin/
 [12]: https://junit.org/junit5/
 [38]: https://sonatype.github.io/ossindex-maven/maven-plugin/
+[0]: https://github.com/exasol/virtual-schema-common-jdbc/
 [18]: https://testcontainers.org
 [27]: https://github.com/eclipse-ee4j/jsonp
 [10]: http://hamcrest.org/JavaHamcrest/
