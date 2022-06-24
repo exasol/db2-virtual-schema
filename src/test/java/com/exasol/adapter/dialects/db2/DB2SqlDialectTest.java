@@ -7,7 +7,6 @@ import static com.exasol.adapter.capabilities.LiteralCapability.*;
 import static com.exasol.adapter.capabilities.MainCapability.*;
 import static com.exasol.adapter.capabilities.PredicateCapability.*;
 import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -104,7 +102,7 @@ class DB2SqlDialectTest {
         final SqlDialect sqlDialect = new DB2SqlDialect(null, adapterProperties);
         final PropertyValidationException exception = assertThrows(PropertyValidationException.class,
                 sqlDialect::validateProperties);
-        MatcherAssert.assertThat(exception.getMessage(), containsString("E-VS-COM-JDBC-13"));
+        assertThat(exception.getMessage(), equalTo("E-VSCJDBC-13: This dialect does not support 'CATALOG_NAME' property.  Please, do not set the 'CATALOG_NAME' property."));
     }
 
     private void setMandatoryProperties() {
