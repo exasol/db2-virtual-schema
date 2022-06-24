@@ -30,6 +30,7 @@ This release updates dependencies to fix the following vulnerabilities in transi
 
 ### Test Dependency Updates
 
+* Added `com.exasol:exasol-test-setup-abstraction-java:0.3.2`
 * Updated `com.exasol:exasol-testcontainers:6.1.1` to `6.1.2`
 * Updated `com.exasol:test-db-builder-java:3.3.2` to `3.3.3`
 * Updated `com.exasol:udf-debugging-java:0.6.1` to `0.6.3`
