@@ -1,4 +1,4 @@
-# Virtual Schema for DB2 2.1.0, released 2023-01-18
+# Virtual Schema for DB2 2.1.0, released 2023-01-19
 
 Code name: Enhanced Data Type Detection for Result Sets
 
