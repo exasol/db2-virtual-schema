@@ -64,7 +64,7 @@ class DB2SqlDialectIT {
 
     private static String getTestHostIpAddress() {
         if (DockerMachineClient.instance().isInstalled()) {
-            return EXASOL.getTestHostIpAddress();
+            return EXASOL.getHost();
         } else {
             return EXASOL.getHostIp();
         }
