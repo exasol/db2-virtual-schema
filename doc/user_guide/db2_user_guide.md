@@ -131,10 +131,11 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 * `OFFSET` is currently not supported as only DB2 V11 support this natively
 * `ADD_DAYS`, `ADD_WEEKS` ... will be replaced by `COLUMN + DAYS`, `COLUMN + ....`
 
-## Testing information
+## Testing Information
 
 In the following matrix you find combinations of JDBC driver and dialect version that we tested.
 
 | Virtual Schema Version | DB2 Version           | Driver Name | Driver Version |
 |------------------------|---------------------- |-------------|----------------|
-| 2.0.0                  | ibmcom/db2:11.5.7.0a | db2jcc      | See pom.xml    |
+| 2.0.0                  | ibmcom/db2:11.5.7.0a  | db2jcc      | 11.5.7.0a      |
+| 2.1.0                  | ibmcom/db2:11.5.8.0   | db2jcc      | 11.5.8.0       |

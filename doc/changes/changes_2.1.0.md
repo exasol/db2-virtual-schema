@@ -8,6 +8,11 @@ Starting with version 7.1.14 Exasol database uses the capabilities reported by e
 
 This release provides enhanced data type detection for result sets by updating virtual-schema-common-jdbc to version [10.1.0](https://github.com/exasol/virtual-schema-common-jdbc/releases/tag/10.1.0). If this new detection mechanism causes issues (e.g. with encoding of `CHAR` and `VARCHAR` types) you can disable it by setting `IMPORT_DATA_TYPES` to value `FROM_RESULT_SET` when creating the virtual schema. See the documentation of [JDBC adapter properties](https://github.com/exasol/virtual-schema-common-jdbc/blob/main/README.md#adapter-properties-for-jdbc-based-virtual-schemas) for details.
 
+The release also improves conversion of DB2 types `TIMESTAMP` and `TIME`:
+
+* `TIMESTAMP` DB2 columns are now converted to `TIMESTAMP` columns in Exasol, before they had type `VARCHAR`.
+* `TIME` DB2 columns now use the format `HH24:MM:SS`, before it was `HH24.MM.SS`.
+
 ## Features
 
 * #21: Updated to VSCJDBC 10.1.0
