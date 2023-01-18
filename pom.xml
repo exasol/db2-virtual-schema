@@ -63,15 +63,6 @@
             <scope>test</scope>
         </dependency>
         <!--Integration test dependencies -->
-        <!-- 
-
-            <dependency>
-                <groupId>com.exasol</groupId>
-                <artifactId>exasol-testcontainers</artifactId>
-                <version>6.1.2</version>
-                <scope>test</scope>
-            </dependency>
-        -->
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-test-setup-abstraction-java</artifactId>
