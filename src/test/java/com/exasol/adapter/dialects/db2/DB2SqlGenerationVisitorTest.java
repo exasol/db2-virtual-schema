@@ -50,13 +50,13 @@ class DB2SqlGenerationVisitorTest {
         assertThat(this.visitor.visit(column), equalTo("\"test_column\""));
     }
 
-    @CsvSource(value = { "XML : XMLSERIALIZE(\"test_column\" as VARCHAR(32000) INCLUDING XMLDECLARATION)", //
-            "CLOB : CAST(SUBSTRING(\"test_column\",32672) AS VARCHAR(32672))", //
-            "CHAR () FOR BIT DATA : HEX(\"test_column\")", //
-            "VARCHAR () FOR BIT DATA : HEX(\"test_column\")", //
-            "TIME : VARCHAR(\"test_column\")", //
-            "TIMESTAMP : VARCHAR(\"test_column\")" //
-    }, delimiter = ':')
+    @CsvSource(value = { "XML :: XMLSERIALIZE(\"test_column\" as VARCHAR(32000) INCLUDING XMLDECLARATION)", //
+            "CLOB :: CAST(SUBSTRING(\"test_column\",32672) AS VARCHAR(32672))", //
+            "CHAR () FOR BIT DATA :: HEX(\"test_column\")", //
+            "VARCHAR () FOR BIT DATA :: HEX(\"test_column\")", //
+            "TIME :: CHAR(\"test_column\", JIS)", //
+            "TIMESTAMP :: TO_CHAR(\"test_column\", 'YYYY-MM-DD HH24:MI:SS.FF3')" //
+    }, delimiterString = "::")
     @ParameterizedTest
     void testVisitSqlColumnWithParent(final String typeName, final String expected) throws AdapterException {
         final SqlColumn column = getSqlColumn(typeName);
