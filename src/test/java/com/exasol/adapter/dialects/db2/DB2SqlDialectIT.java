@@ -36,7 +36,7 @@ class DB2SqlDialectIT {
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
             EXASOL_DOCKER_REFERENCE).withReuse(true);
     @Container
-    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE);
+    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense();
     private static Connection exasolConnection;
     private static Connection db2Connection;
     private static ExasolObjectFactory objectFactory;
