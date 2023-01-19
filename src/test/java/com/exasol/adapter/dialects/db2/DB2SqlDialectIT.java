@@ -36,7 +36,7 @@ class DB2SqlDialectIT {
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
             EXASOL_DOCKER_REFERENCE).withReuse(true);
     @Container
-    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE);
+    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense();
     private static Connection exasolConnection;
     private static Connection db2Connection;
     private static ExasolObjectFactory objectFactory;
@@ -64,7 +64,7 @@ class DB2SqlDialectIT {
 
     private static String getTestHostIpAddress() {
         if (DockerMachineClient.instance().isInstalled()) {
-            return EXASOL.getTestHostIpAddress();
+            return EXASOL.getHost();
         } else {
             return EXASOL.getHostIp();
         }
@@ -177,15 +177,15 @@ class DB2SqlDialectIT {
     @Test
     void testTimeMapping() throws SQLException {
         final String table = createSingleColumnTable("TIME", List.of("'00.00.00'", "'23.59.59'"));
-        assertVirtualTableContents(table, table().row("00.00.00").row("23.59.59").matches());
+        assertVirtualTableContents(table, table().row("00:00:00").row("23:59:59").matches());
     }
 
     @Test
     void testTimestampMapping() throws SQLException {
         final String table = createSingleColumnTable("TIMESTAMP",
                 List.of("'1900-01-01 00.00.00'", "'9999-12-31 23.59.59'"));
-        assertVirtualTableContents(table,
-                table().row("1900-01-01-00.00.00.000000").row("9999-12-31-23.59.59.000000").matches());
+        assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.0"))
+                .row(Timestamp.valueOf("9999-12-31 23:59:59.0")).matches());
     }
 
     @Test
@@ -304,8 +304,6 @@ class DB2SqlDialectIT {
         final VirtualSchema virtualSchema = createVirtualSchema();
         try {
             assertThat(selectAllFromCorrespondingVirtualTable(virtualSchema, table), matcher);
-        } catch (final SQLException exception) {
-            Assertions.fail("Unable to execute assertion query. Caused by: " + exception.getMessage());
         } finally {
             virtualSchema.drop();
         }
@@ -319,8 +317,7 @@ class DB2SqlDialectIT {
                 .build();
     }
 
-    private ResultSet selectAllFromCorrespondingVirtualTable(final VirtualSchema virtualSchema, final String table)
-            throws SQLException {
+    private ResultSet selectAllFromCorrespondingVirtualTable(final VirtualSchema virtualSchema, final String table) {
         return selectAllFrom(getVirtualTableName(virtualSchema, table));
     }
 
@@ -328,12 +325,17 @@ class DB2SqlDialectIT {
         return virtualSchema.getFullyQualifiedName() + ".\"" + table + "\"";
     }
 
-    private ResultSet selectAllFrom(final String tableName) throws SQLException {
+    private ResultSet selectAllFrom(final String tableName) {
         return query("SELECT * FROM " + tableName);
     }
 
-    private ResultSet query(final String sql) throws SQLException {
-        return exasolConnection.createStatement().executeQuery(sql);
+    private ResultSet query(final String sql) {
+        try {
+            return exasolConnection.createStatement().executeQuery(sql);
+        } catch (final SQLException exception) {
+            throw new IllegalStateException("Failed to execute statement '" + sql + "': " + exception.getMessage(),
+                    exception);
+        }
     }
 
     private void createTablesForJoinTest() throws SQLException {
@@ -355,8 +357,6 @@ class DB2SqlDialectIT {
         final VirtualSchema virtualSchema = createVirtualSchema();
         try {
             assertThat(query(sql), matcher);
-        } catch (final SQLException exception) {
-            Assertions.fail("Unable to execute assertion query. Caused by: " + exception.getMessage());
         } finally {
             virtualSchema.drop();
         }

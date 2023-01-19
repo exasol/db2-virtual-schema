@@ -67,9 +67,10 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
         case "VARCHAR () FOR BIT DATA":
             return "HEX(" + projectionString + ")";
         case "TIME":
-            // cast timestamp to not lose precision
+            return "CHAR(" + projectionString + ", JIS)";
+        // cast timestamp to not lose precision
         case "TIMESTAMP":
-            return "VARCHAR(" + projectionString + ")";
+            return "TO_CHAR(" + projectionString + ", 'YYYY-MM-DD HH24:MI:SS.FF3')";
         default:
             return projectionString;
         }

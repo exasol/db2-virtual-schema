@@ -56,7 +56,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.5-db2-2.0.4.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-10.1.0-db2-2.1.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
 /
@@ -68,7 +68,7 @@ CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-9.0.5-db2-2.0.4.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-10.1.0-db2-2.1.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cisuz.jar;
@@ -131,10 +131,11 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 * `OFFSET` is currently not supported as only DB2 V11 support this natively
 * `ADD_DAYS`, `ADD_WEEKS` ... will be replaced by `COLUMN + DAYS`, `COLUMN + ....`
 
-## Testing information
+## Testing Information
 
 In the following matrix you find combinations of JDBC driver and dialect version that we tested.
 
 | Virtual Schema Version | DB2 Version           | Driver Name | Driver Version |
 |------------------------|---------------------- |-------------|----------------|
-| 2.0.0                  | ibmcom/db2:11.5.7.0a | db2jcc      | See pom.xml    |
+| 2.0.0                  | ibmcom/db2:11.5.7.0a  | db2jcc      | 11.5.7.0a      |
+| 2.1.0                  | ibmcom/db2:11.5.8.0   | db2jcc      | 11.5.8.0       |
