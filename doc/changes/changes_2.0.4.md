@@ -9,12 +9,12 @@ This release updates dependencies to fix the following vulnerabilities in transi
 * io.netty:netty-common:jar:4.1.72.Final:test
   * CVE-2022-24823
 * io.netty:netty-handler:jar:4.1.72.Final:test
-  * https://ossindex.sonatype.org/vulnerability/sonatype-2020-0026
+  * sonatype-2020-0026
 * org.apache.xmlrpc:xmlrpc-common:jar:3.1.3:test
   * CVE-2016-5003
   * CVE-2016-5002
 * commons-codec:commons-codec:jar:1.11:test
-  * https://ossindex.sonatype.org/vulnerability/sonatype-2012-0050
+  * sonatype-2012-0050
 * org.apache.xmlrpc:xmlrpc-client:jar:3.1.3:test
   * CVE-2016-5004
 
