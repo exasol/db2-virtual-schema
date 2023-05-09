@@ -10,9 +10,23 @@ Code name:
 
 ## Dependency Updates
 
+### Compile Dependency Updates
+
+* Updated `com.exasol:error-reporting-java:1.0.0` to `1.0.1`
+* Updated `com.exasol:virtual-schema-common-jdbc:10.1.0` to `10.5.0`
+
 ### Test Dependency Updates
 
+* Updated `com.exasol:exasol-test-setup-abstraction-java:2.0.0` to `2.0.1`
+* Updated `com.exasol:hamcrest-resultset-matcher:1.5.2` to `1.6.0`
+* Updated `com.exasol:test-db-builder-java:3.4.1` to `3.4.2`
+* Updated `com.exasol:udf-debugging-java:0.6.6` to `0.6.8`
+* Updated `com.exasol:virtual-schema-common-jdbc:10.1.0` to `10.5.0`
 * Updated `org.jacoco:org.jacoco.agent:0.8.8` to `0.8.9`
+* Updated `org.junit.jupiter:junit-jupiter:5.9.2` to `5.9.3`
+* Updated `org.mockito:mockito-junit-jupiter:5.0.0` to `5.3.1`
+* Updated `org.testcontainers:db2:1.17.6` to `1.18.0`
+* Updated `org.testcontainers:junit-jupiter:1.17.6` to `1.18.0`
 
 ### Plugin Dependency Updates
 

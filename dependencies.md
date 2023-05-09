@@ -13,7 +13,7 @@
 | Dependency                                      | License                                              |
 | ----------------------------------------------- | ---------------------------------------------------- |
 | [Virtual Schema Common JDBC][0]                 | [MIT License][1]                                     |
-| [udf-debugging-java][4]                         | [MIT][5]                                             |
+| [udf-debugging-java][4]                         | [MIT License][5]                                     |
 | [Hamcrest][6]                                   | [BSD License 3][7]                                   |
 | [JUnit Jupiter (Aggregator)][8]                 | [Eclipse Public License v2.0][9]                     |
 | [mockito-junit-jupiter][10]                     | [The MIT License][11]                                |
@@ -63,7 +63,7 @@
 [2]: https://github.com/exasol/error-reporting-java/
 [3]: https://github.com/exasol/error-reporting-java/blob/main/LICENSE
 [4]: https://github.com/exasol/udf-debugging-java/
-[5]: https://opensource.org/licenses/MIT
+[5]: https://github.com/exasol/udf-debugging-java/blob/main/LICENSE
 [6]: http://hamcrest.org/JavaHamcrest/
 [7]: http://opensource.org/licenses/BSD-3-Clause
 [8]: https://junit.org/junit5/
