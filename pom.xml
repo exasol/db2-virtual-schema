@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>db2-virtual-schema</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <name>Virtual Schema for DB2</name>
     <description>Virtual Schema for connecting DB2 as a data source to Exasol</description>
     <url>https://github.com/exasol/db2-virtual-schema/</url>
     <properties>
-        <vscjdbc.version>10.1.0</vscjdbc.version>
-        <org.testcontainers.version>1.17.6</org.testcontainers.version>
+        <vscjdbc.version>10.5.0</vscjdbc.version>
+        <org.testcontainers.version>1.18.0</org.testcontainers.version>
     </properties>
     <dependencies>
         <dependency>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>error-reporting-java</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <!-- Required to avoid exception "jakarta.json.JsonException: Provider org.eclipse.parsson.JsonProviderImpl not found" -->
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>udf-debugging-java</artifactId>
-            <version>0.6.6</version>
+            <version>0.6.8</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -53,20 +53,20 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.9.2</version>
+            <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.0.0</version>
+            <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
         <!--Integration test dependencies -->
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-test-setup-abstraction-java</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -84,19 +84,26 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>hamcrest-resultset-matcher</artifactId>
-            <version>1.5.2</version>
+            <version>1.6.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>test-db-builder-java</artifactId>
-            <version>3.4.1</version>
+            <version>3.4.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.ibm.db2</groupId>
             <artifactId>jcc</artifactId>
             <version>11.5.8.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- Enable log output in integration tests -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>2.0.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -112,7 +119,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>2.9.7</version>
                 <executions>
                     <execution>
                         <goals>
@@ -153,9 +160,6 @@
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <configuration>
                     <excludeVulnerabilityIds>
-                        <!-- Transitive test dependency io.netty:netty-handler:4.1.77 used by software.amazon.awssdk:cloudformation -->
-                        <!-- We are not affected, see https://github.com/aws/aws-sdk-java-v2/issues/3263 for details -->
-                        <exclude>sonatype-2020-0026</exclude>
                         <!-- Transitive test dependency fr.turri:aXMLRPC used by
                         com.exasol:exasol-test-setup-abstraction-java / com.exasol:bucketfs-java.
                         CVE-2020-36641 is reported to be fixed in aXMLRPC 1.12.1. We use version
@@ -169,7 +173,7 @@
     <parent>
         <artifactId>db2-virtual-schema-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
