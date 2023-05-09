@@ -1,8 +1,10 @@
-# Virtual Schema for DB2 2.1.1, released 2023-??-??
+# Virtual Schema for DB2 2.1.1, released 2023-05-09
 
-Code name:
+Code name: Update Dependencies on Top of 2.1.0
 
 ## Summary
+
+This release updates dependency `virtual-schema-common-jdbc` which adds support for the new adapter property [`MAX_TABLE_COUNT`](https://github.com/exasol/virtual-schema-common-jdbc#property-max_table_count) and fixes ambiguous results by escaping SQL wildcards such as underscore `_` and percent `%` in names of catalogs, schemas, and tables when retrieving column metadata from JDBC driver.
 
 ## Documentation
 
