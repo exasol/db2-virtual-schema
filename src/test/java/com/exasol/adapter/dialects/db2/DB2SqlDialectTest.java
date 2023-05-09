@@ -31,10 +31,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
-import com.exasol.adapter.dialects.PropertyValidationException;
 import com.exasol.adapter.dialects.SqlDialect;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
+import com.exasol.adapter.properties.PropertyValidationException;
 
 @ExtendWith(MockitoExtension.class)
 class DB2SqlDialectTest {
@@ -95,14 +95,15 @@ class DB2SqlDialectTest {
     }
 
     @Test
-    void testValidateCatalogProperty() throws PropertyValidationException {
+    void testValidateCatalogProperty() {
         setMandatoryProperties();
         this.rawProperties.put(CATALOG_NAME_PROPERTY, "MY_CATALOG");
         final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
         final SqlDialect sqlDialect = new DB2SqlDialect(null, adapterProperties);
         final PropertyValidationException exception = assertThrows(PropertyValidationException.class,
                 sqlDialect::validateProperties);
-        assertThat(exception.getMessage(), equalTo("E-VSCJDBC-13: This dialect does not support 'CATALOG_NAME' property.  Please, do not set the 'CATALOG_NAME' property."));
+        assertThat(exception.getMessage(), equalTo(
+                "E-VSCJDBC-13: This dialect does not support property 'CATALOG_NAME'. Please, do not set this property."));
     }
 
     private void setMandatoryProperties() {
