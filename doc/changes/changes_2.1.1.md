@@ -25,6 +25,7 @@ Code name:
 * Updated `org.jacoco:org.jacoco.agent:0.8.8` to `0.8.9`
 * Updated `org.junit.jupiter:junit-jupiter:5.9.2` to `5.9.3`
 * Updated `org.mockito:mockito-junit-jupiter:5.0.0` to `5.3.1`
+* Added `org.slf4j:slf4j-jdk14:2.0.7`
 * Updated `org.testcontainers:db2:1.17.6` to `1.18.0`
 * Updated `org.testcontainers:junit-jupiter:1.17.6` to `1.18.0`
 
