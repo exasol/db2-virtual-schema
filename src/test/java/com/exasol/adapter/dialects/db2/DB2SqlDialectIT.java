@@ -11,7 +11,6 @@ import java.sql.*;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Logger;
 
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
@@ -32,13 +31,12 @@ import com.exasol.udfdebugging.UdfTestSetup;
 @Tag("integration")
 @Testcontainers
 class DB2SqlDialectIT {
-    private static final Logger LOG = Logger.getLogger(DB2SqlDialectIT.class.getName());
     private static final String SOURCE_SCHEMA = "TEST_SCHEMA";
     @Container
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
             EXASOL_DOCKER_REFERENCE).withReuse(true);
     @Container
-    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense().withReuse(true);
+    private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense();
     private static Connection exasolConnection;
     private static Connection db2Connection;
     private static ExasolObjectFactory objectFactory;
@@ -85,8 +83,7 @@ class DB2SqlDialectIT {
     }
 
     private static ConnectionDefinition createAdapterConnectionDefinition() {
-        final String jdbcUrl = "jdbc:db2://" + DB2.getHost() + ":" + DB2.getMappedPort(DB2_PORT) + "/test";
-        LOG.info(() -> "Using JDBC URL '" + jdbcUrl + "'");
+        final String jdbcUrl = "jdbc:db2://" + EXASOL.getHostIp() + ":" + DB2.getMappedPort(DB2_PORT) + "/test";
         return objectFactory.createConnectionDefinition("JDBC_CONNECTION", jdbcUrl, DB2.getUsername(),
                 DB2.getPassword());
     }
