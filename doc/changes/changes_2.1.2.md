@@ -1,8 +1,8 @@
-# Virtual Schema for DB2 2.1.2, released 2023-??-??
+# Virtual Schema for DB2 2.1.2, released 2023-07-03
 
 ## Summary
 
-This release fixes vulnerabilities by updating dependencies.
+This release fixes vulnerability CVE-2023-34462 regarding allocation of resources without limits or throttling by updating test dependency `io.netty:netty-handler`.
 
 ## Changes
 
