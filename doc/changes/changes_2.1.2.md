@@ -1,4 +1,4 @@
-# Virtual Schema for DB2 2.1.2, released 2023-07-04
+# Virtual Schema for DB2 2.1.2, released 2023-07-03
 
 Code name: Dependency Upgrade
 
