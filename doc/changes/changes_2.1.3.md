@@ -1,12 +1,18 @@
-# Virtual Schema for DB2 2.1.3, released 2023-??-??
+# Virtual Schema for DB2 2.1.3, released 2023-09-29
 
-Code name:
+Code name: Fix CVE-2023-42503 in test dependency
 
 ## Summary
 
-## Features
+This release fixes CVE-2023-42503 in test dependency `org.apache.commons:commons-compress`.
 
-* ISSUE_NUMBER: description
+## Security
+
+* #30: Fixed CVE-2023-42503 in test dependency `org.apache.commons:commons-compress`
+
+## Refactoring
+
+* #29: Simplified test dependencies
 
 ## Dependency Updates
 
