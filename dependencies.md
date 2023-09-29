@@ -17,13 +17,13 @@
 | [Hamcrest][6]                                   | [BSD License 3][7]                                   |
 | [JUnit Jupiter (Aggregator)][8]                 | [Eclipse Public License v2.0][9]                     |
 | [mockito-junit-jupiter][10]                     | [The MIT License][11]                                |
-| [exasol-test-setup-abstraction-java][12]        | [MIT License][13]                                    |
+| [Test containers for Exasol on Docker][12]      | [MIT License][13]                                    |
 | [Testcontainers :: JUnit Jupiter Extension][14] | [MIT][15]                                            |
 | [Testcontainers :: JDBC :: DB2][14]             | [MIT][15]                                            |
 | [Matcher for SQL Result Sets][16]               | [MIT License][17]                                    |
 | [Test Database Builder for Java][18]            | [MIT License][19]                                    |
 | IBM Data Server Driver for JDBC and SQLJ        | [International Program License Agreement (IPLA)][20] |
-| [SLF4J JDK14 Binding][21]                       | [MIT License][22]                                    |
+| [SLF4J JDK14 Provider][21]                      | [MIT License][22]                                    |
 | [JaCoCo :: Agent][23]                           | [Eclipse Public License 2.0][24]                     |
 
 ## Runtime Dependencies
@@ -44,7 +44,7 @@
 | [Maven Surefire Plugin][36]                             | [Apache-2.0][31]                               |
 | [Versions Maven Plugin][37]                             | [Apache License, Version 2.0][31]              |
 | [duplicate-finder-maven-plugin Maven Mojo][38]          | [Apache License 2.0][39]                       |
-| [Apache Maven Assembly Plugin][40]                      | [Apache License, Version 2.0][31]              |
+| [Apache Maven Assembly Plugin][40]                      | [Apache-2.0][31]                               |
 | [Apache Maven JAR Plugin][41]                           | [Apache License, Version 2.0][31]              |
 | [Artifact reference checker and unifier][42]            | [MIT License][43]                              |
 | [Project keeper maven plugin][44]                       | [The MIT License][45]                          |
@@ -71,9 +71,9 @@
 [9]: https://www.eclipse.org/legal/epl-v20.html
 [10]: https://github.com/mockito/mockito
 [11]: https://github.com/mockito/mockito/blob/main/LICENSE
-[12]: https://github.com/exasol/exasol-test-setup-abstraction-java/
-[13]: https://github.com/exasol/exasol-test-setup-abstraction-java/blob/main/LICENSE
-[14]: https://testcontainers.org
+[12]: https://github.com/exasol/exasol-testcontainers/
+[13]: https://github.com/exasol/exasol-testcontainers/blob/main/LICENSE
+[14]: https://java.testcontainers.org
 [15]: http://opensource.org/licenses/MIT
 [16]: https://github.com/exasol/hamcrest-resultset-matcher/
 [17]: https://github.com/exasol/hamcrest-resultset-matcher/blob/main/LICENSE
@@ -97,7 +97,7 @@
 [35]: http://www.apache.org/licenses/LICENSE-2.0.txt
 [36]: https://maven.apache.org/surefire/maven-surefire-plugin/
 [37]: https://www.mojohaus.org/versions/versions-maven-plugin/
-[38]: https://github.com/basepom/duplicate-finder-maven-plugin
+[38]: https://basepom.github.io/duplicate-finder-maven-plugin
 [39]: http://www.apache.org/licenses/LICENSE-2.0.html
 [40]: https://maven.apache.org/plugins/maven-assembly-plugin/
 [41]: https://maven.apache.org/plugins/maven-jar-plugin/
