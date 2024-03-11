@@ -5,4 +5,9 @@ sources:
       - jar_artifact
       - integration_tests
       - udf_coverage
+build:
+  runnerOs: ubuntu-20.04
+  exasolDbVersions:
+    - "8.25.0"
+    - "7.1.25"
 excludes:
