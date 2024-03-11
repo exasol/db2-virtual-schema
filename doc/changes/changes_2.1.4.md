@@ -33,7 +33,7 @@ This is a security release in which we updated test dependency `com.exasol:udf-d
 
 ### Plugin Dependency Updates
 
-* Updated `com.exasol:error-code-crawler-maven-plugin:1.3.0` to `2.0.0`
+* Updated `com.exasol:error-code-crawler-maven-plugin:1.3.0` to `2.0.1`
 * Updated `com.exasol:project-keeper-maven-plugin:2.9.12` to `4.2.0`
 * Updated `org.apache.maven.plugins:maven-compiler-plugin:3.11.0` to `3.12.1`
 * Updated `org.apache.maven.plugins:maven-enforcer-plugin:3.4.0` to `3.4.1`
