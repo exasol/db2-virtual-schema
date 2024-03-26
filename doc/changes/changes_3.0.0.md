@@ -1,4 +1,4 @@
-# Virtual Schema for DB2 3.0.0, released 2024-??-??
+# Virtual Schema for DB2 3.0.0, released 2024-03-26
 
 Code name: Char set is always `utf-8`, deprecated IMPORT_DATA_TYPES `FROM_RESULT_SET` value .
 
