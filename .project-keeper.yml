@@ -9,4 +9,6 @@ build:
   runnerOs: ubuntu-20.04
   exasolDbVersions:
     - "7.1.25"
+    - "8.24.0"
+  freeDiskSpace: true
 excludes:
