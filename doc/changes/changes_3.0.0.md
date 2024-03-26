@@ -1,6 +1,6 @@
 # Virtual Schema for DB2 3.0.0, released 2024-03-26
 
-Code name: Char set is always `utf-8`, deprecated IMPORT_DATA_TYPES `FROM_RESULT_SET` value .
+Code name: Charset is always `utf-8`, deprecated IMPORT_DATA_TYPES `FROM_RESULT_SET` value
 
 ## Summary
 
@@ -11,5 +11,5 @@ An exception will be thrown when users use`FROM_RESULT_SET`. The exception messa
 
 ## Refactoring
 
-* #25: Update tests to V8 VSMYSQL / Update to vsjdbc 12.0.0
+* #25: Updated tests to Exasol v8, updated to vsjdbc 12.0.0
 
