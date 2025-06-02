@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import org.testcontainers.utility.DockerImageName;
 
 public class IntegrationTestConfiguration {
-    public static final String EXASOL_DOCKER_REFERENCE = "7.1.19";
+    public static final String EXASOL_DOCKER_REFERENCE = "8.34.0";
     public static final DockerImageName DB2_DOCKER_REFERENCE = DockerImageName
             .parse("icr.io/db2_community/db2:11.5.8.0").asCompatibleSubstituteFor("ibmcom/db2");
     public static final String VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION = "virtual-schema-dist-12.0.0-db2-3.0.0.jar";
