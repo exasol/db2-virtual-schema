@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>db2-virtual-schema</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <name>Virtual Schema for DB2</name>
     <description>Virtual Schema for connecting DB2 as a data source to Exasol</description>
     <url>https://github.com/exasol/db2-virtual-schema/</url>
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>4.2.0</version>
+                <version>5.1.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -183,7 +183,7 @@
     <parent>
         <artifactId>db2-virtual-schema-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
