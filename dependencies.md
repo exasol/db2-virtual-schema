@@ -14,7 +14,7 @@
 | ----------------------------------------------- | ---------------------------------------------------- |
 | [Virtual Schema Common JDBC][0]                 | [MIT License][1]                                     |
 | [udf-debugging-java][4]                         | [MIT License][5]                                     |
-| [Hamcrest][6]                                   | [BSD License 3][7]                                   |
+| [Hamcrest][6]                                   | [BSD-3-Clause][7]                                    |
 | [JUnit Jupiter (Aggregator)][8]                 | [Eclipse Public License v2.0][9]                     |
 | [mockito-junit-jupiter][10]                     | [MIT][11]                                            |
 | [Test containers for Exasol on Docker][12]      | [MIT License][13]                                    |
@@ -23,7 +23,7 @@
 | [Matcher for SQL Result Sets][16]               | [MIT License][17]                                    |
 | [Test Database Builder for Java][18]            | [MIT License][19]                                    |
 | IBM Data Server Driver for JDBC and SQLJ        | [International Program License Agreement (IPLA)][20] |
-| [SLF4J JDK14 Provider][21]                      | [MIT License][22]                                    |
+| [SLF4J JDK14 Provider][21]                      | [MIT][22]                                            |
 | [JaCoCo :: Agent][23]                           | [EPL-2.0][24]                                        |
 
 ## Runtime Dependencies
@@ -54,7 +54,7 @@
 | [Apache Maven JAR Plugin][47]                           | [Apache-2.0][29]                            |
 | [Artifact reference checker and unifier][48]            | [MIT License][49]                           |
 | [Project Keeper Maven plugin][50]                       | [The MIT License][51]                       |
-| [Apache Maven Dependency Plugin][52]                    | [Apache License, Version 2.0][29]           |
+| [Apache Maven Dependency Plugin][52]                    | [Apache-2.0][29]                            |
 | [Maven Failsafe Plugin][53]                             | [Apache-2.0][29]                            |
 | [JaCoCo :: Maven Plugin][54]                            | [EPL-2.0][24]                               |
 | [Quality Summarizer Maven Plugin][55]                   | [MIT License][56]                           |
@@ -68,7 +68,7 @@
 [4]: https://github.com/exasol/udf-debugging-java/
 [5]: https://github.com/exasol/udf-debugging-java/blob/main/LICENSE
 [6]: http://hamcrest.org/JavaHamcrest/
-[7]: http://opensource.org/licenses/BSD-3-Clause
+[7]: https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE
 [8]: https://junit.org/junit5/
 [9]: https://www.eclipse.org/legal/epl-v20.html
 [10]: https://github.com/mockito/mockito
@@ -83,7 +83,7 @@
 [19]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
 [20]: https://www.ibm.com/support/customer/csol/terms/?ref=L-AJVM-KLN94L-01-11-2023-zz-en
 [21]: http://www.slf4j.org
-[22]: http://www.opensource.org/licenses/mit-license.php
+[22]: https://opensource.org/license/mit
 [23]: https://www.eclemma.org/jacoco/index.html
 [24]: https://www.eclipse.org/legal/epl-2.0/
 [25]: https://github.com/eclipse-ee4j/jsonp
