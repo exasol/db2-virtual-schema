@@ -28,7 +28,7 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 * Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `12.0.1`
 * Updated `org.hamcrest:hamcrest:2.2` to `3.0`
 * Updated `org.jacoco:org.jacoco.agent:0.8.11` to `0.8.13`
-* Added `org.junit.jupiter:junit-jupiter-api:5.13.0`
+* Added `org.junit.jupiter:junit-jupiter-params:5.13.0`
 * Removed `org.junit.jupiter:junit-jupiter:5.10.2`
 * Updated `org.mockito:mockito-junit-jupiter:5.11.0` to `5.18.0`
 * Updated `org.slf4j:slf4j-jdk14:2.0.12` to `2.0.17`
