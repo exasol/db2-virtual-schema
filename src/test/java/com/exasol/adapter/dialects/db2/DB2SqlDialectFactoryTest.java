@@ -1,9 +1,12 @@
 package com.exasol.adapter.dialects.db2;
 
+import static com.exasol.adapter.dialects.db2.IntegrationTestConfiguration.EXASOL_VERSION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
+import com.exasol.ExaMetadata;
+import com.exasol.ExaMetadataStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +27,8 @@ class DB2SqlDialectFactoryTest {
 
     @Test
     void testCreateDialect() {
-        assertThat(this.factory.createSqlDialect(null, AdapterProperties.emptyProperties()),
+        final ExaMetadata metadata = ExaMetadataStub.builder().databaseVersion(EXASOL_VERSION).build();
+        assertThat(this.factory.createSqlDialect(null, AdapterProperties.emptyProperties(), metadata),
                 instanceOf(DB2SqlDialect.class));
     }
 }

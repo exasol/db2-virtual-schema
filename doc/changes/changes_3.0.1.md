@@ -17,7 +17,7 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 
 ### Compile Dependency Updates
 
-* Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `12.0.1`
+* Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `13.0.0`
 
 ### Test Dependency Updates
 
@@ -25,7 +25,7 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 * Updated `com.exasol:hamcrest-resultset-matcher:1.6.5` to `1.7.1`
 * Updated `com.exasol:test-db-builder-java:3.5.3` to `3.6.1`
 * Updated `com.exasol:udf-debugging-java:0.6.12` to `0.6.16`
-* Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `12.0.1`
+* Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `13.0.0`
 * Updated `org.hamcrest:hamcrest:2.2` to `3.0`
 * Updated `org.jacoco:org.jacoco.agent:0.8.11` to `0.8.13`
 * Added `org.junit.jupiter:junit-jupiter-params:5.13.0`

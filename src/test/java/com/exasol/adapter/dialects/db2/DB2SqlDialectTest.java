@@ -7,6 +7,7 @@ import static com.exasol.adapter.capabilities.LiteralCapability.*;
 import static com.exasol.adapter.capabilities.MainCapability.*;
 import static com.exasol.adapter.capabilities.PredicateCapability.*;
 import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
+import static com.exasol.adapter.dialects.db2.IntegrationTestConfiguration.EXASOL_VERSION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.exasol.ExaMetadata;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,20 +40,22 @@ import com.exasol.adapter.properties.PropertyValidationException;
 
 @ExtendWith(MockitoExtension.class)
 class DB2SqlDialectTest {
-    private DB2SqlDialect dialect;
+
     private Map<String, String> rawProperties;
+
     @Mock
     private ConnectionFactory connectionFactoryMock;
+    @Mock
+    private ExaMetadata exaMetadataMock;
 
     @BeforeEach
     void beforeEach() {
         this.rawProperties = new HashMap<>();
-        this.dialect = new DB2SqlDialect(this.connectionFactoryMock, AdapterProperties.emptyProperties());
     }
 
     @Test
     void testGetCapabilities() {
-        final Capabilities capabilities = this.dialect.getCapabilities();
+        final Capabilities capabilities = testee().getCapabilities();
         assertAll(
                 () -> assertThat(capabilities.getMainCapabilities(),
                         containsInAnyOrder(SELECTLIST_PROJECTION, SELECTLIST_EXPRESSIONS, FILTER_EXPRESSIONS,
@@ -83,14 +87,15 @@ class DB2SqlDialectTest {
 
     @Test
     void testMetadataReaderClass() {
-        assertThat(this.dialect.createRemoteMetadataReader(), instanceOf(DB2MetadataReader.class));
+        when(exaMetadataMock.getDatabaseVersion()).thenReturn(EXASOL_VERSION);
+        assertThat(testee().createRemoteMetadataReader(), instanceOf(DB2MetadataReader.class));
     }
 
     @Test
     void testCreateRemoteMetadataReaderConnectionFails() throws SQLException {
         when(this.connectionFactoryMock.getConnection()).thenThrow(new SQLException("mock"));
         final RemoteMetadataReaderException exception = assertThrows(RemoteMetadataReaderException.class,
-                this.dialect::createRemoteMetadataReader);
+                testee()::createRemoteMetadataReader);
         assertThat(exception.getMessage(), equalTo("E-VSDB2-1: Unable to create DB2 remote metadata reader. Caused by: mock"));
     }
 
@@ -98,10 +103,8 @@ class DB2SqlDialectTest {
     void testValidateCatalogProperty() {
         setMandatoryProperties();
         this.rawProperties.put(CATALOG_NAME_PROPERTY, "MY_CATALOG");
-        final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
-        final SqlDialect sqlDialect = new DB2SqlDialect(null, adapterProperties);
         final PropertyValidationException exception = assertThrows(PropertyValidationException.class,
-                sqlDialect::validateProperties);
+                testee()::validateProperties);
         assertThat(exception.getMessage(), equalTo(
                 "E-VSCJDBC-13: This dialect does not support property 'CATALOG_NAME'. Please, do not set this property."));
     }
@@ -114,19 +117,17 @@ class DB2SqlDialectTest {
     void testValidateSchemaProperty() throws PropertyValidationException {
         setMandatoryProperties();
         this.rawProperties.put(SCHEMA_NAME_PROPERTY, "MY_SCHEMA");
-        final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
-        final SqlDialect sqlDialect = new DB2SqlDialect(null, adapterProperties);
-        sqlDialect.validateProperties();
+        testee().validateProperties();
     }
 
     @Test
     void testSupportsJdbcCatalogs() {
-        assertThat(this.dialect.supportsJdbcCatalogs(), equalTo(SqlDialect.StructureElementSupport.NONE));
+        assertThat(testee().supportsJdbcCatalogs(), equalTo(SqlDialect.StructureElementSupport.NONE));
     }
 
     @Test
     void testSupportsJdbcSchemas() {
-        assertThat(this.dialect.supportsJdbcSchemas(), equalTo(SqlDialect.StructureElementSupport.MULTIPLE));
+        assertThat(testee().supportsJdbcSchemas(), equalTo(SqlDialect.StructureElementSupport.MULTIPLE));
     }
 
     @CsvSource({ "tableName, \"tableName\"", //
@@ -134,38 +135,43 @@ class DB2SqlDialectTest {
     })
     @ParameterizedTest
     void testApplyQuote(final String unquoted, final String quoted) {
-        assertThat(this.dialect.applyQuote(unquoted), equalTo(quoted));
+        assertThat(testee().applyQuote(unquoted), equalTo(quoted));
     }
 
     @ValueSource(strings = { "ab:'ab'", "a'b:'a''b'", "a''b:'a''''b'", "'ab':'''ab'''" })
     @ParameterizedTest
     void testGetLiteralString(final String definition) {
-        assertThat(this.dialect.getStringLiteral(definition.substring(0, definition.indexOf(':'))),
+        assertThat(testee().getStringLiteral(definition.substring(0, definition.indexOf(':'))),
                 equalTo(definition.substring(definition.indexOf(':') + 1)));
     }
 
     @Test
     void testGetLiteralStringNull() {
-        assertThat(this.dialect.getStringLiteral(null), CoreMatchers.equalTo("NULL"));
+        assertThat(testee().getStringLiteral(null), CoreMatchers.equalTo("NULL"));
     }
 
     @Test
     void testRequiresCatalogQualifiedTableNames() {
-        assertThat(this.dialect.requiresCatalogQualifiedTableNames(null), equalTo(false));
+        assertThat(testee().requiresCatalogQualifiedTableNames(null), equalTo(false));
     }
 
     @Test
     void testRequiresSchemaQualifiedTableNames() {
-        assertThat(this.dialect.requiresSchemaQualifiedTableNames(null), equalTo(true));
+        assertThat(testee().requiresSchemaQualifiedTableNames(null), equalTo(true));
     }
 
     @Test
     void testGetSqlGenerator() {
-        assertThat(this.dialect.getSqlGenerator(null), CoreMatchers.instanceOf(DB2SqlGenerationVisitor.class));
+        assertThat(testee().getSqlGenerator(null), CoreMatchers.instanceOf(DB2SqlGenerationVisitor.class));
     }
 
     @Test
     void testGetDefaultNullSorting() {
-        assertThat(this.dialect.getDefaultNullSorting(), equalTo(SqlDialect.NullSorting.NULLS_SORTED_AT_END));
+        assertThat(testee().getDefaultNullSorting(), equalTo(SqlDialect.NullSorting.NULLS_SORTED_AT_END));
+    }
+
+    private DB2SqlDialect testee() {
+        final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
+        return new DB2SqlDialect(connectionFactoryMock, adapterProperties, exaMetadataMock);
     }
 }

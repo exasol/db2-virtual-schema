@@ -34,7 +34,7 @@ class DB2SqlDialectIT {
     private static final String SOURCE_SCHEMA = "TEST_SCHEMA";
     @Container
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
-            EXASOL_DOCKER_REFERENCE).withReuse(true);
+            EXASOL_VERSION).withReuse(true);
     @Container
     private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense();
     private static Connection exasolConnection;
