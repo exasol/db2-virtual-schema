@@ -28,6 +28,7 @@ import com.exasol.containers.ExasolContainer;
 import com.exasol.dbbuilder.dialects.DatabaseObject;
 import com.exasol.dbbuilder.dialects.exasol.*;
 import com.exasol.udfdebugging.UdfTestSetup;
+import org.testcontainers.utility.DockerMachineClient;
 
 @Tag("integration")
 @Testcontainers
