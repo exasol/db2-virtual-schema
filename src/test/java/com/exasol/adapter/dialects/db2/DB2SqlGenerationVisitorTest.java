@@ -55,8 +55,7 @@ class DB2SqlGenerationVisitorTest {
             "CLOB :: CAST(SUBSTRING(\"test_column\",32672) AS VARCHAR(32672))", //
             "CHAR () FOR BIT DATA :: HEX(\"test_column\")", //
             "VARCHAR () FOR BIT DATA :: HEX(\"test_column\")", //
-            "TIME :: CHAR(\"test_column\", JIS)", //
-            "TIMESTAMP :: TO_CHAR(\"test_column\", 'YYYY-MM-DD HH24:MI:SS.FF3')" //
+            "TIME :: CHAR(\"test_column\", JIS)" //
     }, delimiterString = "::")
     @ParameterizedTest
     void testVisitSqlColumnWithParent(final String typeName, final String expected) throws AdapterException {

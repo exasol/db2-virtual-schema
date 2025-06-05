@@ -68,9 +68,6 @@ public class DB2SqlGenerationVisitor extends SqlGenerationVisitor {
             return "HEX(" + projectionString + ")";
         case "TIME":
             return "CHAR(" + projectionString + ", JIS)";
-        // cast timestamp to not lose precision
-        case "TIMESTAMP":
-            return "TO_CHAR(" + projectionString + ", 'YYYY-MM-DD HH24:MI:SS.FF3')";
         default:
             return projectionString;
         }
