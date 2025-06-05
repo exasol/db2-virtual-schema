@@ -391,7 +391,7 @@ class DB2SqlDialectIT {
     }
 
     private boolean supportTimestampPrecision() {
-        final ExasolDockerImageReference dockerImage = EXASOL.getDockerImageReference();
-        return dockerImage.getMajor() == 8 && dockerImage.getMinor() >= 32;
+        final ExasolDockerImageReference reference = EXASOL.getDockerImageReference();
+        return reference.getMajor() > 8 || (reference.getMajor() == 8 && reference.getMinor() >= 32);
     }
 }
