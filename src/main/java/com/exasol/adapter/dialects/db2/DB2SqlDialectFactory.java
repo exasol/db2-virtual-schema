@@ -1,5 +1,6 @@
 package com.exasol.adapter.dialects.db2;
 
+import com.exasol.ExaMetadata;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.dialects.SqlDialect;
 import com.exasol.adapter.dialects.SqlDialectFactory;
@@ -16,8 +17,9 @@ public class DB2SqlDialectFactory implements SqlDialectFactory {
     }
 
     @Override
-    public SqlDialect createSqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties) {
-        return new DB2SqlDialect(connectionFactory, properties);
+    public SqlDialect createSqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties,
+                final ExaMetadata exaMetadata) {
+        return new DB2SqlDialect(connectionFactory, properties, exaMetadata);
     }
 
     @Override

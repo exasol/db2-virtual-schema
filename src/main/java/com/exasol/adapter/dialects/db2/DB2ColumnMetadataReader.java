@@ -3,6 +3,7 @@ package com.exasol.adapter.dialects.db2;
 import java.sql.Connection;
 import java.sql.Types;
 
+import com.exasol.ExaMetadata;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.dialects.IdentifierConverter;
 import com.exasol.adapter.jdbc.BaseColumnMetadataReader;
@@ -21,8 +22,8 @@ public class DB2ColumnMetadataReader extends BaseColumnMetadataReader {
      * @param identifierConverter converter between source and Exasol identifiers
      */
     public DB2ColumnMetadataReader(final Connection connection, final AdapterProperties properties,
-            final IdentifierConverter identifierConverter) {
-        super(connection, properties, identifierConverter);
+                final ExaMetadata exaMetadata, final IdentifierConverter identifierConverter) {
+        super(connection, properties, exaMetadata, identifierConverter);
     }
 
     @Override

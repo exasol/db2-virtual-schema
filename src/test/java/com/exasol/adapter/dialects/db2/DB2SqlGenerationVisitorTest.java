@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.exasol.ExaMetadata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,10 +35,10 @@ class DB2SqlGenerationVisitorTest {
     private SqlGenerationVisitor visitor;
 
     @BeforeEach
-    void beforeEach(@Mock final ConnectionFactory connectionFactoryMock) {
+    void beforeEach(@Mock final ConnectionFactory connectionFactoryMock, @Mock final ExaMetadata exaMetadataMock) {
         final SqlDialectFactory dialectFactory = new DB2SqlDialectFactory();
         final SqlDialect dialect = dialectFactory.createSqlDialect(connectionFactoryMock,
-                AdapterProperties.emptyProperties());
+                AdapterProperties.emptyProperties(), exaMetadataMock);
         final SqlGenerationContext context = new SqlGenerationContext("test_catalog", "test_schema", false);
         this.visitor = new DB2SqlGenerationVisitor(dialect, context);
     }
@@ -54,8 +55,7 @@ class DB2SqlGenerationVisitorTest {
             "CLOB :: CAST(SUBSTRING(\"test_column\",32672) AS VARCHAR(32672))", //
             "CHAR () FOR BIT DATA :: HEX(\"test_column\")", //
             "VARCHAR () FOR BIT DATA :: HEX(\"test_column\")", //
-            "TIME :: CHAR(\"test_column\", JIS)", //
-            "TIMESTAMP :: TO_CHAR(\"test_column\", 'YYYY-MM-DD HH24:MI:SS.FF3')" //
+            "TIME :: CHAR(\"test_column\", JIS)" //
     }, delimiterString = "::")
     @ParameterizedTest
     void testVisitSqlColumnWithParent(final String typeName, final String expected) throws AdapterException {

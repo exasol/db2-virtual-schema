@@ -2,6 +2,7 @@ package com.exasol.adapter.dialects.db2;
 
 import java.sql.Connection;
 
+import com.exasol.ExaMetadata;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.dialects.BaseIdentifierConverter;
 import com.exasol.adapter.dialects.IdentifierConverter;
@@ -17,19 +18,20 @@ public class DB2MetadataReader extends AbstractRemoteMetadataReader {
      * @param connection database connection through which the reader retrieves the metadata from the remote source
      * @param properties user-defined properties
      */
-    public DB2MetadataReader(final Connection connection, final AdapterProperties properties) {
-        super(connection, properties);
+    public DB2MetadataReader(final Connection connection, final AdapterProperties properties,
+                final ExaMetadata exaMetadata) {
+        super(connection, properties, exaMetadata);
     }
 
     @Override
     protected ColumnMetadataReader createColumnMetadataReader() {
-        return new DB2ColumnMetadataReader(this.connection, this.properties, getIdentifierConverter());
+        return new DB2ColumnMetadataReader(this.connection, this.properties, this.exaMetadata, getIdentifierConverter());
     }
 
     @Override
     protected TableMetadataReader createTableMetadataReader() {
         return new BaseTableMetadataReader(this.connection, this.columnMetadataReader, this.properties,
-                this.identifierConverter);
+                this.exaMetadata, this.identifierConverter);
     }
 
     @Override

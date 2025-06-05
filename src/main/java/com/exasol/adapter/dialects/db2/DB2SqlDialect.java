@@ -10,6 +10,7 @@ import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
 import java.sql.SQLException;
 import java.util.Set;
 
+import com.exasol.ExaMetadata;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
 import com.exasol.adapter.dialects.*;
@@ -31,14 +32,15 @@ public class DB2SqlDialect extends AbstractSqlDialect {
      * @param connectionFactory factory for the JDBC connection to the remote data source
      * @param properties        user-defined adapter properties
      */
-    public DB2SqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties) {
-        super(connectionFactory, properties, Set.of(SCHEMA_NAME_PROPERTY));
+    public DB2SqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties,
+                final ExaMetadata exaMetadata) {
+        super(connectionFactory, properties, exaMetadata, Set.of(SCHEMA_NAME_PROPERTY));
     }
 
     @Override
     protected RemoteMetadataReader createRemoteMetadataReader() {
         try {
-            return new DB2MetadataReader(this.connectionFactory.getConnection(), this.properties);
+            return new DB2MetadataReader(this.connectionFactory.getConnection(), this.properties, this.exaMetadata);
         } catch (final SQLException exception) {
             throw new RemoteMetadataReaderException(ExaError.messageBuilder("E-VSDB2-1")
                     .message("Unable to create DB2 remote metadata reader. Caused by: {{cause|uq}}")
