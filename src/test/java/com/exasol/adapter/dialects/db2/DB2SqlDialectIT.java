@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
+import com.exasol.containers.ExasolDockerImageReference;
 import com.github.dockerjava.api.model.NetworkSettings;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
@@ -187,11 +188,31 @@ class DB2SqlDialectIT {
     }
 
     @Test
-    void testTimestampMapping() throws SQLException {
+    void testTimestampDefaultMappingWithoutPrecisionSupport() throws SQLException {
+        Assumptions.assumeFalse(supportTimestampPrecision());
         final String table = createSingleColumnTable("TIMESTAMP",
-                List.of("'1900-01-01 00.00.00'", "'9999-12-31 23.59.59'"));
-        assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.0"))
-                .row(Timestamp.valueOf("9999-12-31 23:59:59.0")).matches());
+                List.of("'1900-01-01 00.00.00.123456'", "'9999-12-31 23.59.59.999999'"));
+        assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.123"))
+                .row(Timestamp.valueOf("9999-12-31 23:59:59.999")).matches());
+    }
+
+
+    @Test
+    void testTimestampDefaultMapping() throws SQLException {
+        Assumptions.assumeTrue(supportTimestampPrecision());
+        final String table = createSingleColumnTable("TIMESTAMP",
+                List.of("'1900-01-01 00.00.00.123456'", "'9999-12-31 23.59.59.999999'"));
+        assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.123456"))
+                .row(Timestamp.valueOf("9999-12-31 23:59:59.999999")).matches());
+    }
+
+    @Test
+    void testTimestampMaxMapping() throws SQLException {
+        Assumptions.assumeTrue(supportTimestampPrecision());
+        final String table = createSingleColumnTable("TIMESTAMP(12)",
+                List.of("'1900-01-01 00.00.00.123456789012'", "'9999-12-31 23.59.59.999999999999'"));
+        assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.123456789"))
+                .row(Timestamp.valueOf("9999-12-31 23:59:59.999999999")).matches());
     }
 
     @Test
@@ -291,7 +312,7 @@ class DB2SqlDialectIT {
     }
 
     private String createSingleColumnTable(final String sourceType, final List<String> values) throws SQLException {
-        return createSingleColumnTable(sourceType, values, sourceType);
+        return createSingleColumnTable(sourceType, values, sourceType.replaceAll("[()]", "_"));
     }
 
     private String createSingleColumnTable(final String sourceType, final List<String> values, final String suffix)
@@ -366,5 +387,10 @@ class DB2SqlDialectIT {
         } finally {
             virtualSchema.drop();
         }
+    }
+
+    private boolean supportTimestampPrecision() {
+        final ExasolDockerImageReference dockerImage = EXASOL.getDockerImageReference();
+        return dockerImage.getMajor() == 8 && dockerImage.getMinor() >= 32;
     }
 }
