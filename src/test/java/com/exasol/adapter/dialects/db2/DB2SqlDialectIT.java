@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
+import com.github.dockerjava.api.model.NetworkSettings;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerMachineClient;
 
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
@@ -45,7 +45,7 @@ class DB2SqlDialectIT {
     private static ConnectionDefinition jdbcConnectionDefinition;
 
     @BeforeAll
-    static void beforeAll() throws BucketAccessException, InterruptedException, TimeoutException,
+    static void beforeAll() throws BucketAccessException, TimeoutException,
             JdbcDatabaseContainer.NoDriverFoundException, SQLException, FileNotFoundException {
         exasolConnection = EXASOL.createConnection("");
         final UdfTestSetup udfTestSetup = new UdfTestSetup(getTestHostIpAddress(), EXASOL.getDefaultBucket(),
@@ -71,7 +71,7 @@ class DB2SqlDialectIT {
     }
 
     private static AdapterScript installVirtualSchemaAdapter(final ExasolSchema adapterSchema)
-            throws InterruptedException, BucketAccessException, TimeoutException, FileNotFoundException {
+            throws BucketAccessException, TimeoutException, FileNotFoundException {
         final Bucket bucket = EXASOL.getDefaultBucket();
         bucket.uploadFile(PATH_TO_VIRTUAL_SCHEMAS_JAR, VIRTUAL_SCHEMAS_JAR_NAME_AND_VERSION);
         return adapterSchema.createAdapterScriptBuilder("EXASOL_ADAPTER").language(JAVA)
@@ -83,9 +83,15 @@ class DB2SqlDialectIT {
     }
 
     private static ConnectionDefinition createAdapterConnectionDefinition() {
-        final String jdbcUrl = "jdbc:db2://" + EXASOL.getHostIp() + ":" + DB2.getMappedPort(DB2_PORT) + "/test";
+        final String jdbcUrl = buildDB2JdbcUrl();
         return objectFactory.createConnectionDefinition("JDBC_CONNECTION", jdbcUrl, DB2.getUsername(),
                 DB2.getPassword());
+    }
+
+    private static String buildDB2JdbcUrl() {
+        final NetworkSettings networkSettings = DB2.getContainerInfo().getNetworkSettings();
+        final String ipAddress = networkSettings.getNetworks().values().iterator().next().getIpAddress();
+        return "jdbc:db2://" + ipAddress + ":" + DB2_PORT + "/test";
     }
 
     private static void uploadDriverToBucket() throws BucketAccessException, TimeoutException, FileNotFoundException {
