@@ -118,12 +118,16 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 | INTEGER       | ✓         | DECIMAL(10,0)              |
 | SMALLINT      | ✓         | DECIMAL(5,0)               |
 | TIME          | ✓         | VARCHAR(100)               |
-| TIMESTAMP     | ✓         | TIMESTAMP                  |
+| TIMESTAMP     | ✓         | TIMESTAMP *                |
 | REAL          | ✓         | DOUBLE PRECISION           |
 | VARCHAR       | ✓         | VARCHAR                    |
 | VARBINARY     | ×         |                            |
 | VARGRAPHIC    | ×         |                            |
 | XML           | ✓         | VARCHAR(2000000)           |
+
+* TIMESTAMP with fractional second precision are mapped to TIMESTAMP with milliseconds precision
+for Exasol versions up to 8.31. Starting with Exasol 8.32 they are mapped with the same specified precision up to 
+nanosecond (9). Precisions greater than nanoseconds will be truncated to nanoseconds.
 
 ## Casting of Functions
 
@@ -136,6 +140,7 @@ CREATE VIRTUAL SCHEMA <virtual schema name>
 In the following matrix you find combinations of JDBC driver and dialect version that we tested.
 
 | Virtual Schema Version | DB2 Version           | Driver Name | Driver Version |
-|------------------------|---------------------- |-------------|----------------|
+|------------------------|-----------------------|-------------|----------------|
 | 2.0.0                  | ibmcom/db2:11.5.7.0a  | db2jcc      | 11.5.7.0a      |
 | 2.1.0                  | ibmcom/db2:11.5.8.0   | db2jcc      | 11.5.8.0       |
+| 3.1.0                  | ibmcom/db2:12.1.1.0   | db2jcc      | 12.1.0.0       |

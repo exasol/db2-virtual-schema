@@ -1,13 +1,20 @@
-# Virtual Schema for DB2 3.0.1, released 2025-06-02
+# Virtual Schema for DB2 3.1.0, released 2025-06-05
 
-Code name: Security updates
+Code name: Timestamp precision
 
 ## Summary
 
-This release is a security update. We updated the dependencies of the project to fix transitive security issues.
+This release improves the support for TIMESTAMP columns with fractional second precision (FSP). 
+The specified FSP will be maintained in Exasol newer versions (>= 8.32.0)
+
+This release also contains a security update. We updated the dependencies of the project to fix transitive security issues.
 
 We also added an exception for the OSSIndex for CVE-2024-55551, which is a false positive in Exasol's JDBC driver.
 This issue has been fixed quite a while back now, but the OSSIndex unfortunately does not contain the fix version of 24.2.1 (2024-12-10) set.
+
+## Features
+
+* #35: TS(9) support in DB2 VS
 
 ## Security
 
@@ -26,6 +33,7 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 * Updated `com.exasol:test-db-builder-java:3.5.3` to `3.6.1`
 * Updated `com.exasol:udf-debugging-java:0.6.12` to `0.6.16`
 * Updated `com.exasol:virtual-schema-common-jdbc:12.0.0` to `13.0.0`
+* Updated `com.ibm.db2:jcc:11.5.9.0` to `12.1.0.0`
 * Updated `org.hamcrest:hamcrest:2.2` to `3.0`
 * Updated `org.jacoco:org.jacoco.agent:0.8.11` to `0.8.13`
 * Added `org.junit.jupiter:junit-jupiter-params:5.13.0`

@@ -81,7 +81,7 @@
 [17]: https://github.com/exasol/hamcrest-resultset-matcher/blob/main/LICENSE
 [18]: https://github.com/exasol/test-db-builder-java/
 [19]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
-[20]: https://www.ibm.com/support/customer/csol/terms/?ref=L-AJVM-KLN94L-01-11-2023-zz-en
+[20]: https://www.ibm.com/support/customer/csol/terms/?ref=L-DCUA-QQ54XG-01-10-2024-zz-en
 [21]: http://www.slf4j.org
 [22]: https://opensource.org/license/mit
 [23]: https://www.eclemma.org/jacoco/index.html
