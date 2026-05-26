@@ -145,9 +145,9 @@ nanosecond (9). Precisions greater than nanoseconds will be truncated to nanosec
 
 In the following matrix you find combinations of JDBC driver and dialect version that we tested.
 
-| Virtual Schema Version | DB2 Version           | Driver Name | Driver Version |
-|------------------------|-----------------------|-------------|----------------|
-| 2.0.0                  | ibmcom/db2:11.5.7.0a  | db2jcc      | 11.5.7.0a      |
-| 2.1.0                  | ibmcom/db2:11.5.8.0   | db2jcc      | 11.5.8.0       |
-| 3.1.0                  | ibmcom/db2:12.1.1.0   | db2jcc      | 12.1.0.0       |
-| 4.0.0                  | 
+| Virtual Schema Version | DB2 Version                | Driver Name | Driver Version |
+|------------------------|----------------------------|-------------|----------------|
+| 2.0.0                  | ibmcom/db2:11.5.7.0a       | db2jcc      | 11.5.7.0a      |
+| 2.1.0                  | ibmcom/db2:11.5.8.0        | db2jcc      | 11.5.8.0       |
+| 3.1.0                  | db2_community/db2:12.1.1.0 | db2jcc      | 12.1.0.0       |
+| 4.0.0                  | db2_community/db2:12.1.4.0 | db2jcc      | 12.1.4.0       |
