@@ -7,7 +7,6 @@ import static com.exasol.matcher.TypeMatchMode.NO_JAVA_TYPE_CHECK;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import com.exasol.containers.ExasolContainer;
 import com.exasol.containers.ExasolDockerImageReference;
 import com.exasol.dbbuilder.dialects.DatabaseObject;
 import com.exasol.dbbuilder.dialects.exasol.*;
+import com.exasol.drivers.JdbcDriver;
 import com.exasol.udfdebugging.UdfTestSetup;
 import com.github.dockerjava.api.model.NetworkSettings;
 
@@ -99,10 +99,12 @@ class DB2SqlDialectIT {
     }
 
     private static void uploadDriverToBucket() throws BucketAccessException, TimeoutException, FileNotFoundException {
-        final Bucket bucket = EXASOL.getDefaultBucket();
-        final Path pathToSettingsFile = Path.of("src", "test", "resources", JDBC_DRIVER_CONFIGURATION_FILE_NAME);
-        bucket.uploadFile(JDBC_DRIVER_PATH, "drivers/jdbc/" + JDBC_DRIVER_NAME);
-        bucket.uploadFile(pathToSettingsFile, "drivers/jdbc/" + JDBC_DRIVER_CONFIGURATION_FILE_NAME);
+        EXASOL.getDriverManager().install(JdbcDriver.builder("DB2")
+                .sourceFile(JDBC_DRIVER_PATH)
+                .mainClass("com.ibm.db2.jcc.DB2Driver")
+                .prefix("jdbc:db2:")
+                .enableSecurityManager(false)
+                .build());
     }
 
     @AfterAll
