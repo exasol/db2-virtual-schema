@@ -1,10 +1,6 @@
 package com.exasol.adapter.dialects.db2;
 
-import com.exasol.ExaMetadata;
-import com.exasol.adapter.AdapterProperties;
-import com.exasol.adapter.dialects.SqlDialect;
-import com.exasol.adapter.dialects.SqlDialectFactory;
-import com.exasol.adapter.jdbc.ConnectionFactory;
+import com.exasol.adapter.dialects.*;
 import com.exasol.logging.VersionCollector;
 
 /**
@@ -17,9 +13,8 @@ public class DB2SqlDialectFactory implements SqlDialectFactory {
     }
 
     @Override
-    public SqlDialect createSqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties,
-                final ExaMetadata exaMetadata) {
-        return new DB2SqlDialect(connectionFactory, properties, exaMetadata);
+    public SqlDialect createSqlDialect(final JDBCAdapterContext context) {
+        return new DB2SqlDialect(context);
     }
 
     @Override
@@ -27,5 +22,10 @@ public class DB2SqlDialectFactory implements SqlDialectFactory {
         final VersionCollector versionCollector = new VersionCollector(
                 "META-INF/maven/com.exasol/db2-virtual-schema/pom.properties");
         return versionCollector.getVersionNumber();
+    }
+
+    @Override
+    public String getAdapterProjectShortTag() {
+        return "VSDB2";
     }
 }

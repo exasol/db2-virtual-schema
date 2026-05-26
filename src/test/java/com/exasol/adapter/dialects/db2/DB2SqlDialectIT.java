@@ -7,36 +7,38 @@ import static com.exasol.matcher.TypeMatchMode.NO_JAVA_TYPE_CHECK;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-import com.exasol.containers.ExasolDockerImageReference;
-import com.github.dockerjava.api.model.NetworkSettings;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
-import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.db2.Db2Container;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerMachineClient;
 
 import com.exasol.bucketfs.Bucket;
 import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.containers.ExasolContainer;
+import com.exasol.containers.ExasolDockerImageReference;
 import com.exasol.dbbuilder.dialects.DatabaseObject;
 import com.exasol.dbbuilder.dialects.exasol.*;
+import com.exasol.drivers.JdbcDriver;
 import com.exasol.udfdebugging.UdfTestSetup;
-import org.testcontainers.utility.DockerMachineClient;
+import com.github.dockerjava.api.model.NetworkSettings;
 
 @Tag("integration")
 @Testcontainers
 class DB2SqlDialectIT {
     private static final String SOURCE_SCHEMA = "TEST_SCHEMA";
+    @SuppressWarnings("resource") // Will beclosed by @Container annotation
     @Container
     private static final ExasolContainer<? extends ExasolContainer<?>> EXASOL = new ExasolContainer<>(
             EXASOL_VERSION).withReuse(true);
+    @SuppressWarnings("resource") // Will beclosed by @Container annotation
     @Container
     private static final Db2Container DB2 = new Db2Container(DB2_DOCKER_REFERENCE).acceptLicense();
     private static Connection exasolConnection;
@@ -96,11 +98,13 @@ class DB2SqlDialectIT {
         return "jdbc:db2://" + ipAddress + ":" + DB2_PORT + "/test";
     }
 
-    private static void uploadDriverToBucket() throws BucketAccessException, TimeoutException, FileNotFoundException {
-        final Bucket bucket = EXASOL.getDefaultBucket();
-        final Path pathToSettingsFile = Path.of("src", "test", "resources", JDBC_DRIVER_CONFIGURATION_FILE_NAME);
-        bucket.uploadFile(JDBC_DRIVER_PATH, "drivers/jdbc/" + JDBC_DRIVER_NAME);
-        bucket.uploadFile(pathToSettingsFile, "drivers/jdbc/" + JDBC_DRIVER_CONFIGURATION_FILE_NAME);
+    private static void uploadDriverToBucket() {
+        EXASOL.getDriverManager().install(JdbcDriver.builder("DB2")
+                .sourceFile(JDBC_DRIVER_PATH)
+                .mainClass("com.ibm.db2.jcc.DB2Driver")
+                .prefix("jdbc:db2:")
+                .enableSecurityManager(false)
+                .build());
     }
 
     @AfterAll
@@ -196,7 +200,6 @@ class DB2SqlDialectIT {
         assertVirtualTableContents(table, table().row(Timestamp.valueOf("1900-01-01 00:00:00.123"))
                 .row(Timestamp.valueOf("9999-12-31 23:59:59.999")).matches());
     }
-
 
     @Test
     void testTimestampDefaultMapping() throws SQLException {
@@ -341,7 +344,7 @@ class DB2SqlDialectIT {
         return objectFactory.createVirtualSchemaBuilder("THE_VS") //
                 .adapterScript(adapterScript) //
                 .connectionDefinition(jdbcConnectionDefinition) //
-                .properties(Map.of("SCHEMA_NAME", SOURCE_SCHEMA)) //
+                .addProperties(Map.of("SCHEMA_NAME", SOURCE_SCHEMA)) //
                 .build();
     }
 
