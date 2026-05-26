@@ -98,7 +98,7 @@ class DB2SqlDialectIT {
         return "jdbc:db2://" + ipAddress + ":" + DB2_PORT + "/test";
     }
 
-    private static void uploadDriverToBucket() throws BucketAccessException, TimeoutException, FileNotFoundException {
+    private static void uploadDriverToBucket() {
         EXASOL.getDriverManager().install(JdbcDriver.builder("DB2")
                 .sourceFile(JDBC_DRIVER_PATH)
                 .mainClass("com.ibm.db2.jcc.DB2Driver")
