@@ -8,42 +8,33 @@ This virtual schema uses `telemetry-java` to send anonymous feature-usage events
 
 For details on what is collected and how to disable telemetry, see the [documentation](https://github.com/exasol/telemetry-java/blob/main/doc/app-user-guide.md).
 
-## Registering the JDBC Driver in EXAOperation
+## Uploading the JDBC Driver to Exasol BucketFS
 
-First download the [DB2 JDBC driver](http://www-01.ibm.com/support/docview.wss?uid=swg21363866).
+1. Download the [DB2 JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads).
+2. Upload the driver to BucketFS, see the [BucketFS documentation](https://docs.exasol.com/db/latest/administration/on-premise/bucketfs/accessfiles.htm) for details.
 
-Now register the driver in EXAOperation:
+    Hint: Put the driver into folder `default/drivers/jdbc/` to register it for [ExaLoader](#registering-the-jdbc-driver-for-exaloader), too.
 
-1. Click "Software"
-1. Switch to tab "JDBC Drivers"
-1. Click "Browse..."
-1. Select JDBC driver file
-1. Click "Upload"
-1. Click "Add"
-1. In dialog "Add EXACluster JDBC driver" configure the JDBC driver (see below)
+## Registering the JDBC driver for ExaLoader
 
-You need to specify the following settings when adding the JDBC driver via EXAOperation.
+In order to enable the ExaLoader to fetch data from the external database you must register the driver for ExaLoader as described in the [Installation procedure for JDBC drivers](https://github.com/exasol/docker-db/#installing-custom-jdbc-drivers).
+1. ExaLoader expects the driver in BucketFS folder `default/drivers/jdbc`.
 
-| Parameter | Value                         |
-|-----------|-------------------------------|
-| Name      | `DB2`                         |
-| Main      | `com.ibm.db2.jcc.DB2Driver`   |
-| Prefix    | `jdbc:db2:`                   |
-| Files     | `db2jcc4.jar` + license files |
+    If you uploaded the driver for UDF to a different folder, then you need to [upload](#uploading-the-jdbc-driver-to-exasol-bucketfs) the driver again.
+2. Additionally you need to create file `settings.cfg` and [upload](#uploading-the-jdbc-driver-to-exasol-bucketfs) it to the same folder in BucketFS:
 
-Additionally, there are 2 files for the DB2 Driver:
+```properties
+DRIVERNAME=DB2
+JAR=jcc.jar
+DRIVERMAIN=com.ibm.db2.jcc.DB2Driver
+PREFIX=jdbc:db2:
+NOSECURITY=YES
+FETCHSIZE=100000
+INSERTSIZE=-1
 
-* `db2jcc_license_cu.jar` - License File for DB2 on Linux Unix and Windows
-* `db2jcc_license_cisuz.jar` - License File for DB2 on zOS (Mainframe)
+```
 
-Make sure that you upload the necessary license file for the target platform you want to connect to.
-
-## Uploading the JDBC Driver to BucketFS
-
-1. [Create a bucket in BucketFS](https://docs.exasol.com/administration/on-premise/bucketfs/create_new_bucket_in_bucketfs_service.htm)
-1. Upload the driver and the license to BucketFS
-
-This step is necessary since the UDF container the adapter runs in has no access to the JDBC drivers installed via EXAOperation but it can access BucketFS.
+Ensure to add a trailing newline to `settings.cfg`.
 
 ## Installing the Adapter Script
 
