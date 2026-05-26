@@ -2,6 +2,12 @@
 
 [DB2](https://www.ibm.com/analytics/db2) is an IBM database product. It is a Relational Database Management System (RDBMS). DB2 is extended with the support of Object-Oriented features and non-relational structures with XML.
 
+## Telemetry
+
+This virtual schema uses `telemetry-java` to send anonymous feature-usage events.
+
+For details on what is collected and how to disable telemetry, see the [documentation](https://github.com/exasol/telemetry-java/blob/main/doc/app-user-guide.md).
+
 ## Registering the JDBC Driver in EXAOperation
 
 First download the [DB2 JDBC driver](http://www-01.ibm.com/support/docview.wss?uid=swg21363866).
@@ -56,7 +62,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-13.0.0-db2-3.1.1.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-14.0.2-db2-4.0.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
 /
@@ -68,7 +74,7 @@ CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
   %scriptclass com.exasol.adapter.RequestDispatcher;
-  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-13.0.0-db2-3.1.1.jar;
+  %jar /buckets/<BFS service>/<bucket>/virtual-schema-dist-14.0.2-db2-4.0.0.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc4.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cu.jar;
   %jar /buckets/<BFS service>/<bucket>/db2jcc_license_cisuz.jar;
@@ -144,3 +150,4 @@ In the following matrix you find combinations of JDBC driver and dialect version
 | 2.0.0                  | ibmcom/db2:11.5.7.0a  | db2jcc      | 11.5.7.0a      |
 | 2.1.0                  | ibmcom/db2:11.5.8.0   | db2jcc      | 11.5.8.0       |
 | 3.1.0                  | ibmcom/db2:12.1.1.0   | db2jcc      | 12.1.0.0       |
+| 4.0.0                  | 

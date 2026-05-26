@@ -10,13 +10,12 @@ import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
 import java.sql.SQLException;
 import java.util.Set;
 
-import com.exasol.ExaMetadata;
-import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
 import com.exasol.adapter.dialects.*;
 import com.exasol.adapter.dialects.rewriting.ImportIntoTemporaryTableQueryRewriter;
 import com.exasol.adapter.dialects.rewriting.SqlGenerationContext;
-import com.exasol.adapter.jdbc.*;
+import com.exasol.adapter.jdbc.RemoteMetadataReader;
+import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
 import com.exasol.errorreporting.ExaError;
 
 /**
@@ -29,12 +28,10 @@ public class DB2SqlDialect extends AbstractSqlDialect {
     /**
      * Create a new instance of the {@link DB2SqlDialect}.
      *
-     * @param connectionFactory factory for the JDBC connection to the remote data source
-     * @param properties        user-defined adapter properties
+     * @param context context for the dialect
      */
-    public DB2SqlDialect(final ConnectionFactory connectionFactory, final AdapterProperties properties,
-                final ExaMetadata exaMetadata) {
-        super(connectionFactory, properties, exaMetadata, Set.of(SCHEMA_NAME_PROPERTY));
+    public DB2SqlDialect(final JDBCAdapterContext context) {
+        super(context, Set.of(SCHEMA_NAME_PROPERTY));
     }
 
     @Override

@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.exasol.ExaMetadata;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,8 +30,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.exasol.ExaMetadata;
 import com.exasol.adapter.AdapterProperties;
 import com.exasol.adapter.capabilities.Capabilities;
+import com.exasol.adapter.dialects.JDBCAdapterContext;
 import com.exasol.adapter.dialects.SqlDialect;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 import com.exasol.adapter.jdbc.RemoteMetadataReaderException;
@@ -172,6 +173,10 @@ class DB2SqlDialectTest {
 
     private DB2SqlDialect testee() {
         final AdapterProperties adapterProperties = new AdapterProperties(this.rawProperties);
-        return new DB2SqlDialect(connectionFactoryMock, adapterProperties, exaMetadataMock);
+        return new DB2SqlDialect(JDBCAdapterContext.builder()
+                .properties(adapterProperties)
+                .metadata(this.exaMetadataMock)
+                .connectionFactory(this.connectionFactoryMock)
+                .build());
     }
 }
