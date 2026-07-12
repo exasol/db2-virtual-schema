@@ -82,7 +82,7 @@
 [18]: https://github.com/exasol/test-db-builder-java/
 [19]: https://github.com/exasol/test-db-builder-java/blob/main/LICENSE
 [20]: https://www.rocketsoftware.com/
-[21]: https://www.ibm.com/support/customer/csol/terms/?ref=L-XFLK-S5N8U5-01-03-2026-zz-en
+[21]: https://www.ibm.com/support/customer/csol/terms/?ref=L-HJHH-A2W6TH-01-06-2026-zz-en
 [22]: http://www.slf4j.org
 [23]: https://opensource.org/license/mit
 [24]: https://www.eclemma.org/jacoco/index.html
