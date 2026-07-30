@@ -268,9 +268,9 @@ class DB2SqlGenerationVisitorTest {
 
     @Test
     void testVisitSqlStatementSelectWithJoins() throws AdapterException {
-        final ColumnMetadata columnLeftMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+        final ColumnMetadata columnLeftMetadata = ColumnMetadata.builder().name("C1").type(DataType.createBool())
                 .build();
-        final ColumnMetadata columnRightMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+        final ColumnMetadata columnRightMetadata = ColumnMetadata.builder().name("C1").type(DataType.createBool())
                 .build();
         final SqlColumn columnLeft = new SqlColumn(1, columnLeftMetadata, "TL");
         final SqlColumn columnRight = new SqlColumn(1, columnRightMetadata, "TR");
@@ -286,9 +286,9 @@ class DB2SqlGenerationVisitorTest {
 
     @Test
     void testVisitSqlStatementSelectWithJoinsAndAliases() throws AdapterException {
-        final ColumnMetadata columnLeftMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+        final ColumnMetadata columnLeftMetadata = ColumnMetadata.builder().name("C1").type(DataType.createBool())
                 .build();
-        final ColumnMetadata columnRightMetadata = new ColumnMetadata.Builder().name("C1").type(DataType.createBool())
+        final ColumnMetadata columnRightMetadata = ColumnMetadata.builder().name("C1").type(DataType.createBool())
                 .build();
         final SqlColumn columnLeft = new SqlColumn(1, columnLeftMetadata, "TL", "LEFT");
         final SqlColumn columnRight = new SqlColumn(1, columnRightMetadata, "TR", "RIGHT");
