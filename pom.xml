@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>db2-virtual-schema</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
     <name>Virtual Schema for DB2</name>
     <description>Virtual Schema for connecting DB2 as a data source to Exasol</description>
     <url>https://github.com/exasol/db2-virtual-schema/</url>
     <properties>
-        <vscjdbc.version>14.0.2</vscjdbc.version>
+        <vscjdbc.version>14.0.4</vscjdbc.version>
         <org.testcontainers.version>2.0.5</org.testcontainers.version>
     </properties>
     <dependencies>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>udf-debugging-java</artifactId>
-            <version>0.6.18</version>
+            <version>0.6.20</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -52,8 +52,8 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <!-- Version 6 requires Java 17 -->
+            <artifactId>junit-jupiter</artifactId>
+            <!-- JUnit 6 requires Java 17; this project still builds on Java 11. -->
             <version>5.14.4</version>
             <scope>test</scope>
         </dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>7.3.0</version>
+            <version>8.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -85,19 +85,19 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>hamcrest-resultset-matcher</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>test-db-builder-java</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.ibm.db2</groupId>
             <artifactId>jcc</artifactId>
-            <version>12.1.4.0</version>
+            <version>12.1.5.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -120,7 +120,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>5.6.2</version>
+                <version>5.7.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -171,7 +171,7 @@
     <parent>
         <artifactId>db2-virtual-schema-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>4.0.0</version>
+        <version>4.0.1</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
