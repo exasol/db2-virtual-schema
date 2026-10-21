@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>db2-virtual-schema</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
     <name>Virtual Schema for DB2</name>
     <description>Virtual Schema for connecting DB2 as a data source to Exasol</description>
     <url>https://github.com/exasol/db2-virtual-schema/</url>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>udf-debugging-java</artifactId>
-            <version>0.6.20</version>
+            <version>0.6.22</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>8.0.1</version>
+            <version>8.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -120,7 +120,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>5.7.4</version>
+                <version>5.8.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -171,7 +171,7 @@
     <parent>
         <artifactId>db2-virtual-schema-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>4.0.1</version>
+        <version>4.0.2</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
